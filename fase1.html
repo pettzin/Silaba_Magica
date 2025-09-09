@@ -3,55 +3,51 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fase 1 - Sílabas Mágicas</title>
+  <title>Fase 1 - O Chá da Boneca</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="fase1">
   <div id="fase1" class="tela ativa">
+
+    <!-- Cabeçalho da fase -->
     <div class="fase-header">
-      <h2>A Bola da Alegria - Fase 1</h2>
-      <p>Encontre as sílabas para completar a história!</p>
+      <h2>O Chá de Boneca</h2>
     </div>
 
-    <div class="imagem-historia"></div>
+    <!-- Imagem da história -->
+    <div class="imagem-historia">
+      <img src="images/1- o cha de boneca.png" alt="O Chá da Boneca">
+    </div>
 
+    <!-- Texto da história -->
     <div class="texto-historia">
       <p>
-        Era uma vez uma bola vermelha que adorava pular pelo parquinho.
-        Ela rolava para cá, pulava para 
-        <span class="lacuna" data-silaba="LA">___</span> 
-        e fazia muitos amigos: o cachorro corria atrás dela, as crianças riam quando ela passava, 
-        e até o vento ajudava empurrando ela mais longe.
-      </p>
-      
-      <p>
-        Um dia, a bola saiu de uma poça d'água. Em vez de ficar triste, ela deu um grande pulo 
-        e espalhou gotinhas que fizeram todo mundo rir ainda mais. 
-        Desde então, a bola ficou conhecida como a bola da alegria, 
-        porque onde ela estava, a diversão também aparecia.
+        A menina tinha uma <span class="lacuna" data-silaba="BO">__</span>neca.<br>
+        Ela colocou a boneca em uma cadeira.<br>
+        Depois trouxe um copo de suco.<br>
+        “Vamos brincar de chá!”, disse animada.<br>
+        A boneca parecia sorrir de alegria.
       </p>
     </div>
 
+    <!-- Objetivo -->
     <div class="objetivo">
-      <strong>Seu objetivo:</strong> 
-      Encontre as sílabas LA, CA, TI no caça-palavras para completar a história!
+      Encontre a sílaba <strong>BO</strong> no caça-sílabas para completar a história!
     </div>
 
+    <!-- Progresso -->
     <div class="progresso">
-      <div>
-        <strong>Progresso das Sílabas:</strong>
-        <span id="silaba-LA" class="silaba-pendente">LA</span>
-        <span id="silaba-CA" class="silaba-pendente">CA</span>
-        <span id="silaba-TI" class="silaba-pendente">TI</span>
-      </div>
+      <strong>Sílaba:</strong>
+      <span id="silaba-BO" class="silaba-pendente">BO</span>
     </div>
 
+    <!-- Caça-sílabas -->
     <div class="caca-silabas">
       <h3>Caça-Sílabas</h3>
-      <p>Clique e arraste para selecionar as sílabas!</p>
       <div class="grid" id="grid"></div>
       <div id="feedback" class="feedback"></div>
     </div>
+
   </div>
 
   <script src="js/script.js"></script>

@@ -1,3 +1,4 @@
+/* Reset global */
 * {
   margin: 0;
   padding: 0;
@@ -6,7 +7,6 @@
 
 body {
   font-family: 'Comic Sans MS', cursive, Arial, sans-serif;
-  background: linear-gradient(135deg, #87CEEB 0%, #98FB98 100%);
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -14,25 +14,9 @@ body {
   overflow-x: hidden;
 }
 
-.tela {
-  display: none;
-  background: white;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  width: 95%;
-  max-width: 800px;
-  padding: 30px;
-  text-align: center;
-  animation: fadeIn 0.5s ease-in;
-}
-
-.tela.ativa {
-  display: block;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+/* ===== TELA INICIAL ====== */
+body.tela-inicial {
+  background: linear-gradient(135deg, #87CEEB 0%, #98FB98 100%);
 }
 
 .tela-inicial {
@@ -45,14 +29,12 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 50px 20px 20px 20px; /* topo menor = h1 sobe */
-  box-sizing: border-box;
+  padding: 50px 20px 20px 20px; /* h1 sobe */
 }
 
 .tela-inicial h1 {
   font-family: Georgia, 'Times New Roman', Times, serif;
   font-size: clamp(1.5rem, 5vw, 2.5rem);
-  font-size: 1.6vw;
   color: #333;
   margin-top: 200px;
   margin-bottom: 32px;
@@ -60,10 +42,8 @@ body {
   text-align: center;
 }
 
-
 .btn-play {
   font-size: clamp(2em, 8vw, 3em);
-  font-size: 2.8vw;
   font-weight: bold;
   background: none;
   border: none;
@@ -73,67 +53,91 @@ body {
   transition: transform 0.2s ease-in-out;
 }
 
-
 .btn-play:hover {
   transform: scale(1.1);
 }
 
-/* Pequenas telas */
+/* Pequenas telas (inicial) */
 @media (max-width: 600px) {
   .tela-inicial {
     padding: 30px 10px 10px 10px;
   }
-
   .tela-inicial h1 {
     margin-bottom: 30px;
   }
+  .btn-play {
+    font-size: 2.5em;
+  }
 }
 
-
-/* Fase 1 */
-.fase-header {
-  background: linear-gradient(90deg, #FF6B6B, #4ECDC4);
-  color: white;
-  padding: 15px;
-  border-radius: 15px;
-  margin-bottom: 20px;
-}
-
-.fase-header h2 {
-  font-size: 1.8em;
-  margin-bottom: 5px;
-}
-
-.imagem-historia {
-  width: 100%;
-  height: 250px;
-  background: linear-gradient(135deg, #87CEEB 0%, #98FB98 50%, #F0E68C 100%);
-  border: 3px solid #4ECDC4;
-  border-radius: 15px;
+/* ====== FASE 1 =========== */
+body.fase1 {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background: url("../images/1- blur o cha de boneca.png") no-repeat center center;
+  background-size: cover;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+#fase1.tela {
+  background: rgba(255, 255, 255, 0.92);
+  max-width: 750px;
+  height: 95vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 20px 30px 30px 20px;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  animation: fadeIn 0.5s ease-in;
+  overflow-y: auto;
+}
+
+/* Cabeçalho */
+.fase-header {
+  background: linear-gradient(90deg, #dd3c8d, #be13a8);
+  color: white;
+  padding: 10px;
+  border-radius: 15px;
   margin-bottom: 20px;
-  position: relative;
-  overflow: hidden;
+  display: flex;           
+  justify-content: center; 
+  align-items: center;     
+  text-align: center;     
 }
 
-.imagem-historia::before {
-  content: "🎨 Ilustração da História";
-  color: #666;
+.fase-header h2 {
   font-size: 1.2em;
-  font-weight: bold;
+  margin: 0;
 }
 
+/* Imagem da história */
+.imagem-historia img {
+  max-width: 50%;
+  max-height: 250px;
+  display: flex;
+  margin: 0 auto 15px auto;
+  border-radius: 12px;
+  object-fit: contain;
+}
+
+/* Texto da história */
 .texto-historia {
   background: #F8F9FA;
   padding: 20px;
   border-radius: 15px;
-  margin-bottom: 20px;
-  border-left: 5px solid #FF6B6B;
+  margin-bottom: 10px;
+  border-left: 5px solid #f583eb;
   text-align: left;
-  line-height: 1.6;
-  font-size: 1.1em;
+  line-height: 1.5;
+  font-size: 1.2em;
+  color: #333;
+  max-width: 95%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .lacuna {
@@ -154,50 +158,91 @@ body {
   color: #2E7D32;
 }
 
+/* Objetivo */
 .objetivo {
-  background: linear-gradient(90deg, #FFA726, #FF7043);
+  background: linear-gradient(90deg, #c70ea8, #fd8aee);
   color: white;
-  padding: 15px;
+  padding: 8px;
   border-radius: 15px;
   margin-bottom: 20px;
-  font-weight: bold;
+  font-weight: bold;         
+  justify-content: center; 
+  align-items: center;     
+  text-align: center;      
 }
 
+/* Progresso */
+.progresso {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 10px;
+  background: #E8F5E8;
+  border-radius: 10px;
+}
+
+.silaba-encontrada {
+  background: #4CAF50;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-weight: bold;
+  margin: 0 5px;
+}
+
+.silaba-pendente {
+  background: #FFF3CD;
+  color: #856404;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-weight: bold;
+  margin: 0 5px;
+  border: 2px dashed #FFEAA7;
+}
+
+/* ======= CAÇA-SÍLABAS ===== */
 .caca-silabas {
   background: #F0F8FF;
-  padding: 20px;
+  padding: 15px 15px;
   border-radius: 15px;
-  border: 3px solid #4ECDC4;
+  border: 3px solid #4bc0b8;
+  margin-top: 20px;
+  margin-bottom: 0;
+  text-align: center;
+  max-width: 100%;
+  max-height: 300px; /* altura máxima */
+  
 }
 
 .caca-silabas h3 {
-  color: #2E7D32;
-  margin-bottom: 15px;
-  font-size: 1.3em;
+  color: #1b0666;
+  margin-bottom: 10px;
+  font-size: clamp(1.2em, 3vw, 1.3em);
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(8, 45px);
-  grid-template-rows: repeat(8, 45px);
-  gap: 3px;
+  grid-template-columns: repeat(8, clamp(28px, 4vw, 38px));
+  grid-template-rows: repeat(8, clamp(28px, 4vw, 38px));
+  gap: 2px;
   justify-content: center;
-  margin: 20px auto;
+  margin: 0 auto;
 }
 
 .cell {
-  width: 45px;
-  height: 45px;
+  width: clamp(28px, 4vw, 38px);
+  height: clamp(28px, 4vw, 38px);
   display: flex;
   justify-content: center;
   align-items: center;
   border: 2px solid #DDD;
-  border-radius: 8px;
+  border-radius: 6px;
   user-select: none;
   font-weight: bold;
   cursor: pointer;
   background: white;
-  font-size: 1.1em;
+  font-size: clamp(0.7em, 2vw, 0.9em);
   transition: all 0.2s ease;
 }
 
@@ -220,12 +265,8 @@ body {
   animation: bounce 0.6s ease;
 }
 
-@keyframes bounce {
-  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-  40% { transform: translateY(-10px); }
-  60% { transform: translateY(-5px); }
-}
 
+/* Feedback */
 .feedback {
   margin-top: 15px;
   padding: 10px;
@@ -257,64 +298,38 @@ body {
   animation: pulse 1s infinite;
 }
 
+/* Animações */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-10px); }
+  60% { transform: translateY(-5px); }
+}
+
 @keyframes pulse {
   0% { transform: scale(1); }
   50% { transform: scale(1.05); }
   100% { transform: scale(1); }
 }
 
-.progresso {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  padding: 10px;
-  background: #E8F5E8;
-  border-radius: 10px;
-}
-
-.silaba-encontrada {
-  background: #4CAF50;
-  color: white;
-  padding: 5px 10px;
-  border-radius: 15px;
-  font-weight: bold;
-  margin: 0 5px;
-}
-
-.silaba-pendente {
-  background: #FFF3CD;
-  color: #856404;
-  padding: 5px 10px;
-  border-radius: 15px;
-  font-weight: bold;
-  margin: 0 5px;
-  border: 2px dashed #FFEAA7;
-}
-
+/* Responsividade fase */
 @media (max-width: 600px) {
   .grid {
-    grid-template-columns: repeat(8, 35px);
-    grid-template-rows: repeat(8, 35px);
+    grid-template-columns: repeat(8, 30px); /* ajustado */
+    grid-template-rows: repeat(8, 30px);
+    gap: 2px;
   }
-  
   .cell {
-    width: 35px;
-    height: 35px;
-    font-size: 0.9em;
+    width: 30px;
+    height: 30px;
+    font-size: 0.8em; /* ajustado */
   }
-  
-  .tela {
-    padding: 20px;
+  #fase1.tela {
+    padding: 15px;
     margin: 10px;
-  }
-
-  .tela-inicial h1 {
-    font-size: 2rem;
-    margin-bottom: 30px;
-  }
-
-  .btn-play {
-    font-size: 2.5em;
   }
 }

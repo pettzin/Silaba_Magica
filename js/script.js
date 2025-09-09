@@ -17,11 +17,11 @@ const grid = document.getElementById("grid");
 
 if (grid && feedback) {
   // Sílabas corretas para a fase 1
-  const silabas = ["LA", "CA", "TI"];
+  const silabas = ["BO"];
   let selecionadas = [];
   let encontradas = [];
 
-  // Gerar grid 8x8 com sílabas escondidas
+  // Gerar grid 8x5 com sílabas escondidas
   function gerarGrid() {
     grid.innerHTML = "";
     encontradas = [];
@@ -29,7 +29,7 @@ if (grid && feedback) {
     feedback.className = "feedback";
 
     const letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    let matrix = Array.from({ length: 8 }, () =>
+    let matrix = Array.from({ length: 5 }, () =>
       Array.from({ length: 8 }, () => letras[Math.floor(Math.random() * letras.length)])
     );
 
@@ -40,8 +40,8 @@ if (grid && feedback) {
       let tentativas = 0;
 
       while (!colocado && tentativas < 50) {
-        posX = Math.floor(Math.random() * 7);
-        posY = Math.floor(Math.random() * 7);
+        posX = Math.floor(Math.random() * 7); // colunas 0 a 7
+        posY = Math.floor(Math.random() * 4); // linhas 0 a 4
         horizontal = Math.random() > 0.5;
 
         if (horizontal) {
@@ -51,7 +51,7 @@ if (grid && feedback) {
             colocado = true;
           }
         } else {
-          if (posY + 1 < 8) {
+          if (posY + 1 < 5) {
             matrix[posY][posX] = silaba[0];
             matrix[posY + 1][posX] = silaba[1];
             colocado = true;
