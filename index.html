@@ -4,59 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sílabas Mágicas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  
-  <div id="tela-inicial" class="tela tela-inicial ativa">
-    <h1> Sílabas Mágicas </h1>
-   
-    <button id="btnPlay" class="btn-jogar"> Jogar</button>
+  <!-- Tela Inicial -->
+  <div id="tela-inicial" class="tela-inicial">
+    <h1>SÍLABAS MÁGICAS</h1>
+    <button id="btnPlay" class="btn-play">PLAY</button>
   </div>
 
-  
-  <div id="fase1" class="tela">
-    <div class="fase-header">
-      <h2> A Bola da Alegria - Fase 1</h2>
-      <p>Encontre as sílabas para completar a história!</p>
-    </div>
-
-    
-    <div class="imagem-historia"></div>
-
-    
-    <div class="texto-historia">
-      <p>Era uma vez uma bola vermelha que adorava pular pelo parquinho. Ela rolava para cá, pulava para <span class="lacuna" data-silaba="LA">___</span> e fazia muitos amigos: o cachorro corria atrás dela, as crianças riam quando ela passava, e até o vento ajudava empurrando ela mais longe.</p>
-      
-      <p>Um dia, a bola saiu de uma poça d'água. Em vez de ficar triste, ela deu um grande pulo e espalhou gotinhas que fizeram todo mundo rir ainda mais. Desde então, a bola ficou conhecida como a bola da alegria, porque onde ela estava, a diversão também aparecia.</p>
-    </div>
-
-   
-    <div class="objetivo">
-       <strong>Seu objetivo:</strong> Encontre as sílabas LA, CA, TI no caça-palavras para completar a história!
-    </div>
-
-    
-    <div class="progresso">
-      <div>
-        <strong>Progresso das Sílabas:</strong>
-        <span id="silaba-LA" class="silaba-pendente">LA</span>
-        <span id="silaba-CA" class="silaba-pendente">CA</span>
-        <span id="silaba-TI" class="silaba-pendente">TI</span>
-      </div>
-    </div>
-
-   
-    <div class="caca-silabas">
-      <h3> Caça-Sílabas</h3>
-      <p>Clique e arraste para selecionar as sílabas!</p>
-      <div class="grid" id="grid"></div>
-      <div id="feedback" class="feedback"></div>
-    </div>
-</div>
-
-  <script src="js/script.js"></script>
-
-  
+  <script>
+    const btnPlay = document.getElementById("btnPlay");
+    btnPlay.addEventListener("click", () => {
+      // Redireciona para a página da fase
+      window.location.href = "fase1.html";
+    });
+  </script>
 </body>
 </html>
