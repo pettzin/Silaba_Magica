@@ -20,30 +20,35 @@ body.tela-inicial {
 }
 
 .tela-inicial {
+  position: relative;
   height: 100vh;
   width: 100vw;
   background: url("../images/home.png") no-repeat center top;
   background-size: contain;
   background-color: #add8e6;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 50px 20px 20px 20px; /* h1 sobe */
+  overflow: hidden;
 }
 
+/* Título fixo na imagem */
 .tela-inicial h1 {
+  position: absolute;
+  top: 38%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   font-family: Georgia, 'Times New Roman', Times, serif;
-  font-size: clamp(1.5rem, 5vw, 2.5rem);
+  font-size: clamp(1rem, 5vw, 1.3rem);
   color: #333;
-  margin-top: 200px;
-  margin-bottom: 32px;
   text-shadow: 4px 4px 4px rgba(0,0,0,0.3);
   text-align: center;
 }
 
+/* Botão Play */
 .btn-play {
-  font-size: clamp(2em, 8vw, 3em);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: clamp(1.5rem, 5vw, 2rem);
   font-weight: bold;
   background: none;
   border: none;
@@ -54,19 +59,35 @@ body.tela-inicial {
 }
 
 .btn-play:hover {
-  transform: scale(1.1);
+  transform: translate(-50%, -50%) scale(1.1);
 }
 
-/* Pequenas telas (inicial) */
+/* Botão Loja fixo e responsivo */
+.btn-loja {
+  position: absolute;
+  top: 0.4%;        /* distância do topo */
+  right: 36%;      /* distância da direita */
+  font-size: clamp(1.2rem, 5vw, 2rem);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.btn-loja:hover {
+  transform: scale(1.2);
+}
+
+/* Responsividade pequenas telas */
 @media (max-width: 600px) {
-  .tela-inicial {
-    padding: 30px 10px 10px 10px;
-  }
   .tela-inicial h1 {
-    margin-bottom: 30px;
+    font-size: clamp(1rem, 8vw, 2rem);
   }
   .btn-play {
-    font-size: 2.5em;
+    font-size: clamp(1rem, 10vw, 2rem);
+  }
+  .btn-loja {
+    font-size: clamp(1rem, 8vw, 1rem);
   }
 }
 
@@ -103,10 +124,10 @@ body.fase1 {
   padding: 10px;
   border-radius: 15px;
   margin-bottom: 20px;
-  display: flex;           
-  justify-content: center; 
-  align-items: center;     
-  text-align: center;     
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .fase-header h2 {
@@ -142,14 +163,14 @@ body.fase1 {
 
 .lacuna {
   display: inline-block;
-  background: #FFE4B5;
-  border: 2px dashed #FF6B6B;
+  background: #ffb5ef;
+  border: 2px dashed #ca1fc2;
   padding: 2px 15px;
   margin: 0 3px;
   border-radius: 8px;
   min-width: 60px;
   font-weight: bold;
-  color: #666;
+  color: #1b1b1b;
 }
 
 .lacuna.preenchida {
@@ -160,15 +181,15 @@ body.fase1 {
 
 /* Objetivo */
 .objetivo {
-  background: linear-gradient(90deg, #c70ea8, #fd8aee);
+  background: linear-gradient(90deg, #f168db, #b644a7);
   color: white;
   padding: 8px;
   border-radius: 15px;
   margin-bottom: 20px;
-  font-weight: bold;         
-  justify-content: center; 
-  align-items: center;     
-  text-align: center;      
+  font-weight: bold;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 /* Progresso */
@@ -203,20 +224,19 @@ body.fase1 {
 
 /* ======= CAÇA-SÍLABAS ===== */
 .caca-silabas {
-  background: #F0F8FF;
-  padding: 15px 15px;
+  background: #f7dafa;
+  padding: 15px;
   border-radius: 15px;
-  border: 3px solid #4bc0b8;
+  border: 3px solid #72156d;
   margin-top: 20px;
   margin-bottom: 0;
   text-align: center;
   max-width: 100%;
-  max-height: 300px; /* altura máxima */
-  
+  max-height: 300px;
 }
 
 .caca-silabas h3 {
-  color: #1b0666;
+  color: #dd16ab;
   margin-bottom: 10px;
   font-size: clamp(1.2em, 3vw, 1.3em);
 }
@@ -264,7 +284,6 @@ body.fase1 {
   border-color: #1e7e34;
   animation: bounce 0.6s ease;
 }
-
 
 /* Feedback */
 .feedback {
@@ -319,14 +338,14 @@ body.fase1 {
 /* Responsividade fase */
 @media (max-width: 600px) {
   .grid {
-    grid-template-columns: repeat(8, 30px); /* ajustado */
+    grid-template-columns: repeat(8, 30px);
     grid-template-rows: repeat(8, 30px);
     gap: 2px;
   }
   .cell {
     width: 30px;
     height: 30px;
-    font-size: 0.8em; /* ajustado */
+    font-size: 0.8em;
   }
   #fase1.tela {
     padding: 15px;

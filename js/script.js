@@ -4,8 +4,17 @@
 const btnPlay = document.getElementById("btnPlay");
 if (btnPlay) {
   btnPlay.addEventListener("click", () => {
-    // Redireciona para a página da fase
     window.location.href = "fase1.html";
+  });
+}
+
+// -----------------------------
+// LOJA - botão loja
+// -----------------------------
+const btnLoja = document.getElementById("btnLoja");
+if (btnLoja) {
+  btnLoja.addEventListener("click", () => {
+    window.location.href = "loja.html";
   });
 }
 
@@ -16,12 +25,10 @@ const feedback = document.getElementById("feedback");
 const grid = document.getElementById("grid");
 
 if (grid && feedback) {
-  // Sílabas corretas para a fase 1
   const silabas = ["BO"];
   let selecionadas = [];
   let encontradas = [];
 
-  // Gerar grid 8x5 com sílabas escondidas
   function gerarGrid() {
     grid.innerHTML = "";
     encontradas = [];
@@ -33,15 +40,14 @@ if (grid && feedback) {
       Array.from({ length: 8 }, () => letras[Math.floor(Math.random() * letras.length)])
     );
 
-    // Inserir sílabas (horizontal ou vertical)
     silabas.forEach(silaba => {
       let posX, posY, horizontal;
       let colocado = false;
       let tentativas = 0;
 
       while (!colocado && tentativas < 50) {
-        posX = Math.floor(Math.random() * 7); // colunas 0 a 7
-        posY = Math.floor(Math.random() * 4); // linhas 0 a 4
+        posX = Math.floor(Math.random() * 7);
+        posY = Math.floor(Math.random() * 4);
         horizontal = Math.random() > 0.5;
 
         if (horizontal) {
@@ -61,7 +67,6 @@ if (grid && feedback) {
       }
     });
 
-    // Renderizar grid
     matrix.forEach((linha, y) => {
       linha.forEach((letra, x) => {
         const cell = document.createElement("div");
@@ -76,7 +81,6 @@ if (grid && feedback) {
     ativarSelecao();
   }
 
-  // Controle de seleção por arrasto
   function ativarSelecao() {
     let selecionando = false;
 
@@ -106,7 +110,6 @@ if (grid && feedback) {
       }
     });
 
-    // Suporte para touch (mobile)
     grid.addEventListener("touchstart", e => {
       e.preventDefault();
       const touch = e.touches[0];
@@ -139,7 +142,6 @@ if (grid && feedback) {
     });
   }
 
-  // Limpar seleção anterior
   function limparSelecao() {
     document.querySelectorAll(".cell.selecionada").forEach(cell => {
       if (!cell.classList.contains("correta")) {
@@ -148,7 +150,6 @@ if (grid && feedback) {
     });
   }
 
-  // Verificar se a seleção forma uma sílaba correta
   function verificarSelecao() {
     if (selecionadas.length < 2) {
       limparSelecao();
@@ -166,18 +167,6 @@ if (grid && feedback) {
         c.classList.add("correta");
         c.classList.remove("selecionada");
       });
-      
-      // Atualizar progresso visual
-      const progresso = document.getElementById(`silaba-${palavra}`);
-      if (progresso) progresso.className = "silaba-encontrada";
-      
-      // Preencher lacuna se for LA
-      const lacuna = document.querySelector(`.lacuna[data-silaba="${palavra}"]`);
-      if (lacuna) {
-        lacuna.textContent = palavra === "LA" ? "LÁ" : palavra;
-        lacuna.classList.add("preenchida");
-      }
-      
     } else if (encontradas.includes(palavra)) {
       feedback.textContent = `Você já encontrou: ${palavra}`;
       feedback.className = "feedback";
@@ -190,16 +179,14 @@ if (grid && feedback) {
 
     selecionadas = [];
 
-    // Verificar vitória
     if (encontradas.length === silabas.length) {
       setTimeout(() => {
-        feedback.textContent = "🎉 Parabéns! Você encontrou todas as sílabas e completou a história!";
+        feedback.textContent = "🎉 Parabéns! Você completou a história!";
         feedback.className = "feedback vitoria";
       }, 500);
     }
   }
 
-  // Inicializar o jogo quando a página carregar
   window.addEventListener('load', () => {
     gerarGrid();
   });

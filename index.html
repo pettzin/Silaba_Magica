@@ -7,19 +7,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="tela-inicial">
   <!-- Tela Inicial -->
   <div id="tela-inicial" class="tela-inicial">
     <h1>SÍLABAS MÁGICAS</h1>
+    <button id="btnLoja" class="btn-loja">🛒</button>
     <button id="btnPlay" class="btn-play">PLAY</button>
   </div>
 
-  <script>
-    const btnPlay = document.getElementById("btnPlay");
-    btnPlay.addEventListener("click", () => {
-      // Redireciona para a página da fase
-      window.location.href = "fase1.html";
-    });
-  </script>
+  <script src="js/script.js"></script>
 </body>
 </html>
