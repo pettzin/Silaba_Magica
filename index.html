@@ -1,20 +1,58 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sílabas Mágicas</title>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sílabas Mágicas</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="tela-inicial">
-  <!-- Tela Inicial -->
-  <div id="tela-inicial" class="tela-inicial">
-    <h1>SÍLABAS MÁGICAS</h1>
-    <button id="btnLoja" class="btn-loja">🛒</button>
-    <button id="btnPlay" class="btn-play">PLAY</button>
-  </div>
+<body>
 
-  <script src="js/script.js"></script>
+    <div id="game-container">
+
+        <div id="home-view" class="view">
+            <div class="content">
+                <div class="logo">
+                    <span>SI</span>LABAS
+                    <br>
+                    MA<span>GI</span>CAS
+                </div>
+                <button id="play-button" class="btn-play-new">JOGAR</button>
+                <div id="credits-display-home" class="credits-display">💰 0</div>
+            </div>
+        </div>
+
+        <div id="level-select-view" class="view" style="display: none;">
+            <h2>Seleção de Fases</h2>
+            <div id="level-grid" class="level-grid">
+                </div>
+            <div id="credits-display-levels" class="credits-display"></div>
+            <button id="shop-button-from-levels" class="btn-shop">🛒 Loja</button>
+        </div>
+
+        <div id="game-view" class="view" style="display: none;">
+            </div>
+
+        <div id="shop-view" class="view" style="display: none;">
+            <h2>🛒 Loja</h2>
+            <div id="credits-display-shop" class="credits-display"></div>
+            <div class="shop-items">
+                <div class="shop-item" data-cost="100">Dica Simples (100 créditos)</div>
+                <div class="shop-item" data-cost="250">Pular Fase (250 créditos)</div>
+                <div class="shop-item" data-cost="50">Tema Colorido (50 créditos)</div>
+            </div>
+            <button id="back-to-levels-button" class="btn-back">⬅ Voltar</button>
+        </div>
+
+    </div>
+
+    <script src="js/models/GameModel.js"></script>
+    <script src="js/views/HomeView.js"></script>
+    <script src="js/views/LevelSelectView.js"></script>
+    <script src="js/views/GameView.js"></script>
+    <script src="js/views/ShopView.js"></script>
+    <script src="js/controllers/GameController.js"></script>
+    <script src="js/app.js"></script>
+
 </body>
 </html>
