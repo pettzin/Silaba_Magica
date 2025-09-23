@@ -26,7 +26,7 @@ class GameModel {
       {
         id: 2,
         title: "O Menino e o Cachorro Brincalhão",
-        image: "images/2- o menino e o cachorro brincalhao.png",
+        image: "images/2- o Menino e o Cachorro Brincalhão.png",
         story: `O me<span class="lacuna" data-silaba="NI">__</span>no saiu com seu cachorro.<br>
                         Levou uma bola para brincar no parque.<br>
                         O cachorro correu atrás da bola.<br>
