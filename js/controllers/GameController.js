@@ -27,15 +27,19 @@ class GameController {
     this.showHome()
   }
 
+  // Define o background do body conforme a fase
   _setBodyBackground(levelId = null) {
     const body = document.body
 
     // Remove todas as classes de background
-    body.classList.remove("default-background", "game-background")
+    body.classList.remove("default-background", "game-background", "game-background-2")
 
     if (levelId === 1) {
       // Fase 1: usa a imagem blur como background
       body.classList.add("game-background")
+    } else if (levelId === 2) {
+      // Fase 2: usa a imagem blur do menino e cachorro
+      body.classList.add("game-background-2")
     } else {
       // Todas as outras telas: background padrão #333
       body.classList.add("default-background")

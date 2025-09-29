@@ -32,8 +32,19 @@ body.game-background {
   background-attachment: fixed;
 }
 
+/* Background com imagem blur apenas para a fase 2 */
+body.game-background-2 {
+  background-color: #333;
+  background-image: url("../images/2- blur O Menino e o Cachorro Brincalhão.png");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
 /* Overlay semitransparente sobre a imagem para melhor legibilidade */
-body.game-background::before {
+body.game-background::before,
+body.game-background-2::before {
   content: "";
   position: fixed;
   top: 0;
