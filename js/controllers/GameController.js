@@ -11,33 +11,38 @@ class GameController {
     this.showHome = this.showHome.bind(this)
   }
 
-  // Inicializa o jogo
+  // Método inicial para configurar o jogo
   init() {
-    // Botão "Jogar" da home
+    // 1. Vincula o botão "Jogar" da HomeView para chamar a função showLevelSelect
     this.views.home.bindPlayButton(this.showLevelSelect)
-    // Botão da loja na seleção de fases
-    this.views.levelSelect.bindShopButton(this.showShop)
-    // Botão de voltar da loja
+
+    // 2. Vincula os botões de voltar para a tela de seleção de fases
     this.views.shop.bindBackButton(this.showLevelSelect)
-    // Inicia na tela inicial
+    // O botão de voltar da GameView será vinculado quando a fase for renderizada
+
+    // 3. Vincula o botão da loja
+    this.views.levelSelect.bindShopButton(this.showShop)
+
+    // 4. Inicia na tela inicial
     this.showHome()
   }
 
-  // Define o background do body conforme a fase
   _setBodyBackground(levelId = null) {
     const body = document.body
-    body.classList.remove("default-background", "game-background", "game-background-2")
+
+    // Remove todas as classes de background
+    body.classList.remove("default-background", "game-background")
 
     if (levelId === 1) {
-      body.classList.add("game-background") // Fase 1
-    } else if (levelId === 2) {
-      body.classList.add("game-background-2") // Fase 2
+      // Fase 1: usa a imagem blur como background
+      body.classList.add("game-background")
     } else {
-      body.classList.add("default-background") // Outras telas
+      // Todas as outras telas: background padrão #333
+      body.classList.add("default-background")
     }
   }
 
-  // Atualiza a exibição de créditos em todas as telas
+  // Atualiza a exibição de créditos em todas as telas visíveis
   _updateAllCredits() {
     const credits = this.model.state.credits
     this.views.home.updateCredits(credits)
@@ -64,25 +69,28 @@ class GameController {
     this._hideAllViews()
     this._updateAllCredits()
     this._setBodyBackground()
+
+    // Renderiza a grade de fases com os dados mais recentes do modelo
     this.views.levelSelect.render(
       this.model.levels,
       this.model.state.unlockedLevel,
-      this.showGame
+      this.showGame, // Passa a função que deve ser chamada ao clicar numa fase
     )
+
     this.views.levelSelect.show()
   }
 
   showGame(levelId) {
     const levelData = this.model.getLevelData(levelId)
-    if (!levelData) return
+    if (levelData) {
+      this._hideAllViews()
+      this._setBodyBackground(levelId)
 
-    this._hideAllViews()
-    this._setBodyBackground(levelId)
-
-    // Renderiza a tela do jogo
-    this.views.game.render(levelData, () => this.handleLevelComplete(levelId))
-    this.views.game.bindBackButton(this.showLevelSelect)
-    this.views.game.show()
+      // Renderiza a tela do jogo com os dados da fase específica
+      this.views.game.render(levelData, () => this.handleLevelComplete(levelId))
+      this.views.game.bindBackButton(this.showLevelSelect) // Vincula o botão voltar
+      this.views.game.show()
+    }
   }
 
   showShop() {
@@ -95,6 +103,7 @@ class GameController {
   handleLevelComplete(levelId) {
     console.log(`Fase ${levelId} completa!`)
     this.model.completeLevel(levelId)
+    // Volta para a tela de seleção de fases, que será re-renderizada com o progresso atualizado
     this.showLevelSelect()
   }
 }
