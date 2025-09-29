@@ -126,15 +126,11 @@ class GameView {
 
   bindHintButton(syllables) {
     this.syllables = syllables
-    this.currentSyllableIndex = 0
-
     const hintButton = document.getElementById("hint-button")
     if (hintButton) {
       hintButton.addEventListener("click", () => {
-        if (this.currentSyllableIndex < this.syllables.length) {
-          const currentSyllable = this.syllables[this.currentSyllableIndex]
-          alert(`Procure pela sílaba: ${currentSyllable}`)
-        }
+        const remaining = this.syllables.filter(s => !this.foundSyllables?.includes(s))
+        if (remaining.length > 0) alert(`Procure pela sílaba: ${remaining[0]}`)
       })
     }
   }
@@ -145,9 +141,7 @@ class GameView {
 
     let selectedCells = []
     const foundSyllables = []
-    let currentSyllableIndex = 0
-
-    this.currentSyllableIndex = currentSyllableIndex
+    this.foundSyllables = foundSyllables
 
     function generateGrid() {
       grid.innerHTML = ""
@@ -161,15 +155,11 @@ class GameView {
         if (isHorizontal) {
           const row = Math.floor(Math.random() * 8)
           const col = Math.floor(Math.random() * (8 - syllable.length))
-          for (let i = 0; i < syllable.length; i++) {
-            matrix[row][col + i] = syllable[i]
-          }
+          for (let i = 0; i < syllable.length; i++) matrix[row][col + i] = syllable[i]
         } else {
           const row = Math.floor(Math.random() * (8 - syllable.length))
           const col = Math.floor(Math.random() * 8)
-          for (let i = 0; i < syllable.length; i++) {
-            matrix[row + i][col] = syllable[i]
-          }
+          for (let i = 0; i < syllable.length; i++) matrix[row + i][col] = syllable[i]
         }
       })
 
@@ -186,17 +176,12 @@ class GameView {
     function handleSelectionEnd() {
       if (selectedCells.length === 0) return
 
-      const word = selectedCells.map((cell) => cell.textContent).join("")
-      const currentSyllable = syllablesToFind[currentSyllableIndex]
-
-      if (word === currentSyllable && !foundSyllables.includes(word)) {
+      const word = selectedCells.map(c => c.textContent).join("")
+      if (syllablesToFind.includes(word) && !foundSyllables.includes(word)) {
         feedback.textContent = `Você encontrou: ${word}!`
         feedback.className = "feedback sucesso"
         foundSyllables.push(word)
-        selectedCells.forEach((cell) => cell.classList.add("correta"))
-
-        currentSyllableIndex++
-        this.currentSyllableIndex = currentSyllableIndex
+        selectedCells.forEach(c => c.classList.add("correta"))
 
         if (foundSyllables.length === syllablesToFind.length) {
           feedback.textContent = "Parabéns! Fase completa!"
@@ -206,29 +191,32 @@ class GameView {
       } else {
         feedback.textContent = "Tente novamente!"
         feedback.className = "feedback erro"
-        selectedCells.forEach((cell) => cell.classList.remove("selecionada"))
+        selectedCells.forEach(c => c.classList.remove("selecionada"))
       }
+
       selectedCells = []
     }
 
     let isSelecting = false
-    grid.addEventListener("mousedown", (e) => {
+    grid.addEventListener("mousedown", e => {
       if (e.target.classList.contains("cell")) {
         isSelecting = true
-        selectedCells.forEach((cell) => cell.classList.remove("selecionada"))
+        selectedCells.forEach(c => c.classList.remove("selecionada"))
         selectedCells = [e.target]
         e.target.classList.add("selecionada")
       }
     })
-    grid.addEventListener("mouseover", (e) => {
+
+    grid.addEventListener("mouseover", e => {
       if (isSelecting && e.target.classList.contains("cell") && !selectedCells.includes(e.target)) {
         selectedCells.push(e.target)
         e.target.classList.add("selecionada")
       }
     })
+
     document.addEventListener("mouseup", () => {
       if (isSelecting) {
-        handleSelectionEnd.call(this)
+        handleSelectionEnd()
         isSelecting = false
       }
     })
@@ -236,10 +224,6 @@ class GameView {
     generateGrid()
   }
 
-  show() {
-    this.view.style.display = "block"
-  }
-  hide() {
-    this.view.style.display = "none"
-  }
+  show() { this.view.style.display = "block" }
+  hide() { this.view.style.display = "none" }
 }
