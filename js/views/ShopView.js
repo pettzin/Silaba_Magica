@@ -1,23 +1,23 @@
 class ShopView {
-    constructor() {
-        this.view = document.getElementById('shop-view');
-        this.backButton = document.getElementById('back-to-levels-button');
-        this.creditsDisplay = document.getElementById('credits-display-shop');
-    }
+  constructor() {
+    this.view = document.getElementById("shop-view")
+    this.backButton = document.getElementById("back-to-levels-button")
+    this.creditsDisplay = document.getElementById("credits-display-shop")
+  }
 
-    bindBackButton(handler) {
-        this.backButton.addEventListener('click', handler);
-    }
-    
-    updateCredits(credits) {
-        this.creditsDisplay.textContent = `💰 ${credits}`;
-    }
+  bindBackButton(handler) {
+    this.backButton.addEventListener("click", handler)
+  }
 
-    show() {
-        this.view.style.display = 'flex';
-    }
+  updateCredits(credits) {
+    this.creditsDisplay.textContent = `💰 ${credits}`
+  }
 
-    hide() {
-        this.view.style.display = 'none';
-    }
+  show() {
+    this.view.style.display = "flex"
+  }
+
+  hide() {
+    this.view.style.display = "none"
+  }
 }
