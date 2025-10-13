@@ -52,5 +52,91 @@
     <script src="js/views/AvatarAssistant.js"></script>
     <script src="js/app.js"></script>
 
+    <!-- Botões de áudio -->
+<div id="audio-controls">
+    <button id="btn-music" title="Ligar/Desligar Música">🎵</button>
+    <button id="btn-sfx" title="Ligar/Desligar Efeitos">🔊</button>
+</div>
+
+<style>
+#audio-controls {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    z-index: 9999;
+}
+
+#audio-controls button {
+    background-color: rgba(255, 255, 255, 0.6);
+    border: none;
+    border-radius: 8px;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.2s;
+}
+
+#audio-controls button:hover {
+    background-color: rgba(255, 255, 255, 0.85);
+}
+
+#audio-controls button.off {
+    opacity: 0.5;
+}
+</style>
+
+<script>
+// Simulação de áudio e efeitos (substitua por seus próprios sons)
+let backgroundMusic = new Audio('audio/music.mp3');
+backgroundMusic.loop = true;
+backgroundMusic.volume = 0.5;
+
+let clickSound = new Audio('audio/click.mp3');
+clickSound.volume = 0.6;
+
+// Estado inicial
+let musicOn = true;
+let sfxOn = true;
+
+// Inicia música automaticamente
+backgroundMusic.play().catch(() => {
+    console.log("A música só tocará após interação do usuário (restrição do navegador).");
+});
+
+// Botões
+const btnMusic = document.getElementById('btn-music');
+const btnSfx = document.getElementById('btn-sfx');
+
+// Alternar música
+btnMusic.addEventListener('click', () => {
+    musicOn = !musicOn;
+    if (musicOn) {
+        backgroundMusic.play();
+        btnMusic.classList.remove('off');
+    } else {
+        backgroundMusic.pause();
+        btnMusic.classList.add('off');
+    }
+});
+
+// Alternar efeitos sonoros
+btnSfx.addEventListener('click', () => {
+    sfxOn = !sfxOn;
+    btnSfx.classList.toggle('off', !sfxOn);
+});
+
+// Exemplo de som de clique (você pode usar dentro dos botões do jogo)
+document.addEventListener('click', (e) => {
+    if (sfxOn && e.target.tagName === 'BUTTON' && e.target.id !== 'btn-sfx' && e.target.id !== 'btn-music') {
+        clickSound.currentTime = 0;
+        clickSound.play();
+    }
+});
+</script>
+
 </body>
 </html>
