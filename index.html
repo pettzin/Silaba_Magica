@@ -17,8 +17,7 @@
                     <br>
                     MA<span>GI</span>CAS
                 </div>
-                <button id="play-button" class="btn-play-new">JOGAR</button> <br>
-                <a href="credits.html"><button id="credits-button" class="btn-play-new" style="margin-top: 10px;">Crédito</button></a>
+                <button id="play-button" class="btn-play-new">JOGAR</button>
                 <div id="credits-display-home" class="credits-display">💰 0</div>
             </div>
         </div>
@@ -28,6 +27,7 @@
             <div id="level-grid" class="level-grid">
                 </div>
             <div id="credits-display-levels" class="credits-display"></div>
+            <button id="back-to-home-button" class="btn-back">⬅ Voltar</button>
             <button id="shop-button-from-levels" class="btn-shop">🛒 Loja</button>
         </div>
 
@@ -35,13 +35,9 @@
             </div>
 
         <div id="shop-view" class="view" style="display: none;">
-            <h2>🛒 Loja</h2>
+            <h2>🛒 Loja de Skins</h2>
             <div id="credits-display-shop" class="credits-display"></div>
-            <div class="shop-items">
-                <div class="shop-item" data-cost="100">Dica Simples (100 créditos)</div>
-                <div class="shop-item" data-cost="250">Pular Fase (250 créditos)</div>
-                <div class="shop-item" data-cost="50">Tema Colorido (50 créditos)</div>
-            </div>
+            <div id="skins-grid" class="skins-grid"></div>
             <button id="back-to-levels-button" class="btn-back">⬅ Voltar</button>
         </div>
 
@@ -53,6 +49,7 @@
     <script src="js/views/GameView.js"></script>
     <script src="js/views/ShopView.js"></script>
     <script src="js/controllers/GameController.js"></script>
+    <script src="js/views/AvatarAssistant.js"></script>
     <script src="js/app.js"></script>
 
 </body>

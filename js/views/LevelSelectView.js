@@ -4,6 +4,7 @@ class LevelSelectView {
     this.levelGrid = document.getElementById("level-grid")
     this.creditsDisplay = document.getElementById("credits-display-levels")
     this.shopButton = document.getElementById("shop-button-from-levels")
+    this.backButton = document.getElementById("back-to-home-button")
   }
 
   // Desenha os botões das fases na tela
@@ -29,7 +30,15 @@ class LevelSelectView {
   }
 
   bindShopButton(handler) {
-    this.shopButton.addEventListener("click", handler)
+    if (this.shopButton) {
+      this.shopButton.addEventListener("click", handler)
+    }
+  }
+
+  bindBackButton(handler) {
+    if (this.backButton) {
+      this.backButton.addEventListener("click", handler)
+    }
   }
 
   updateCredits(credits) {
