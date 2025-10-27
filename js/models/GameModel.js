@@ -19,7 +19,7 @@ class GameModel {
         image: "images/skins/default_male.png",
         price: 0,
         unlockLevel: 0,
-        isDefault: true
+        isDefault: true,
       },
       {
         id: "default_female",
@@ -27,7 +27,7 @@ class GameModel {
         image: "images/skins/default_female.png",
         price: 0,
         unlockLevel: 0,
-        isDefault: true
+        isDefault: true,
       },
       // Skins desbloqueáveis por fase
       {
@@ -36,7 +36,7 @@ class GameModel {
         image: "images/skins/avatar_fada.png",
         price: 100,
         unlockLevel: 1,
-        isDefault: false
+        isDefault: false,
       },
       {
         id: "avatar_pirata",
@@ -44,7 +44,7 @@ class GameModel {
         image: "images/skins/avatar_pirata.png",
         price: 150,
         unlockLevel: 2,
-        isDefault: false
+        isDefault: false,
       },
       {
         id: "avatar_princesa",
@@ -52,7 +52,7 @@ class GameModel {
         image: "images/skins/avatar_princesa.png",
         price: 150,
         unlockLevel: 2,
-        isDefault: false
+        isDefault: false,
       },
       {
         id: "avatar_cavaleiro_cosmico",
@@ -60,7 +60,7 @@ class GameModel {
         image: "images/skins/avatar_cavaleiro_cosmico.png",
         price: 200,
         unlockLevel: 3,
-        isDefault: false
+        isDefault: false,
       },
       {
         id: "avatar_mago",
@@ -68,7 +68,7 @@ class GameModel {
         image: "images/skins/avatar_mago.png",
         price: 200,
         unlockLevel: 3,
-        isDefault: false
+        isDefault: false,
       },
       {
         id: "avatar_rainha",
@@ -76,7 +76,7 @@ class GameModel {
         image: "images/skins/avatar_rainha.png",
         price: 250,
         unlockLevel: 4,
-        isDefault: false
+        isDefault: false,
       },
       {
         id: "avatar_rei",
@@ -84,7 +84,7 @@ class GameModel {
         image: "images/skins/avatar_rei.png",
         price: 250,
         unlockLevel: 4,
-        isDefault: false
+        isDefault: false,
       },
       {
         id: "avatar_fada_celestial",
@@ -92,7 +92,7 @@ class GameModel {
         image: "images/skins/avatar_fada_celestial.png",
         price: 300,
         unlockLevel: 5,
-        isDefault: false
+        isDefault: false,
       },
       {
         id: "avatar_dragao",
@@ -100,7 +100,7 @@ class GameModel {
         image: "images/skins/avatar_dragao.png",
         price: 350,
         unlockLevel: 5,
-        isDefault: false
+        isDefault: false,
       },
       {
         id: "avatar_guerreiro_elemental",
@@ -108,7 +108,7 @@ class GameModel {
         image: "images/skins/avatar_guerreiro_elemental.png",
         price: 400,
         unlockLevel: 5,
-        isDefault: false
+        isDefault: false,
       },
     ]
 
@@ -125,8 +125,8 @@ class GameModel {
                         A boneca parecia sorrir de alegria.`,
         objective: "Encontre a sílaba <strong>BO</strong> para completar a história!",
         syllables: ["BO"],
-        reward: 50,
-        rewardSkin: "avatar_fada" // Fada Mágica
+        reward: 100,
+        rewardSkin: "avatar_fada", // Fada Mágica
       },
       {
         id: 2,
@@ -139,8 +139,8 @@ class GameModel {
                         No fim, os dois voltaram felizes para ca<span class="lacuna" data-silaba="SA">__</span>.`,
         objective: "Encontre as sílabas <strong>NI</strong> e <strong>SA</strong> para completar a história!",
         syllables: ["NI", "SA"],
-        reward: 75,
-        rewardSkin: "avatar_pirata" // Pirata
+        reward: 200,
+        rewardSkin: "avatar_pirata", // Pirata
       },
       {
         id: 3,
@@ -155,8 +155,24 @@ class GameModel {
         objective:
           "Encontre as sílabas <strong>LA</strong>, <strong>CA</strong> e <strong>TI</strong> para completar a história!",
         syllables: ["LA", "CA", "TI"],
-        reward: 100,
-        rewardSkin: "avatar_mago" // Mago
+        reward: 300,
+        rewardSkin: "avatar_mago", // Mago
+      },
+      {
+        id: 4,
+        title: "A Princesa Feliz",
+        image: "images/imagens/princesa_feliz.png",
+        story: `Era uma vez uma prin<span class="lacuna" data-silaba="CE">__</span>sa que morava em um castelo.<br>
+                        Ela tinha um lindo vestido <span class="lacuna" data-silaba="RO">__</span>sa.<br>
+                        No jar<span class="lacuna" data-silaba="DIM">___</span>, brincava com sua boneca.<br>
+                        Ela corria entre as flores e ria sem parar.<br>
+                        O sol bri<span class="lacuna" data-silaba="LHA">___</span>va forte no céu.<br>
+                        E todos ficaram felizes no castelo.`,
+        objective:
+          "Encontre as sílabas <strong>CE</strong>, <strong>RO</strong>, <strong>DIM</strong> e <strong>LHA</strong> para completar a história!",
+        syllables: ["CE", "RO", "DIM", "LHA"],
+        reward: 400,
+        rewardSkin: "avatar_rainha", // Rainha
       },
     ]
   }
@@ -171,7 +187,7 @@ class GameModel {
         credits: parsed.credits || 0,
         unlockedLevel: parsed.unlockedLevel || 1,
         currentSkin: parsed.currentSkin || "images/skins/default_male.png",
-        ownedSkins: parsed.ownedSkins || ["default_male", "default_female"]
+        ownedSkins: parsed.ownedSkins || ["default_male", "default_female"],
       }
     }
     return this.defaultState
@@ -180,6 +196,38 @@ class GameModel {
   // Salva o progresso
   saveState() {
     localStorage.setItem("silabasMagicasState", JSON.stringify(this.state))
+
+    // Sincroniza com o servidor se o usuário estiver logado
+    this.syncWithServer()
+  }
+
+  // Sincroniza o progresso com o servidor
+  async syncWithServer() {
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"))
+
+    if (!currentUser || !currentUser.id) {
+      return // Usuário não está logado
+    }
+
+    try {
+      const response = await fetch(`http://localhost:3000/usuarios/salvar-progresso/${currentUser.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          gameState: this.state,
+        }),
+      })
+
+      const data = await response.json()
+
+      if (data.success) {
+        console.log("Progresso salvo no servidor!")
+      }
+    } catch (error) {
+      console.error("Erro ao sincronizar com servidor:", error)
+    }
   }
 
   // Adiciona créditos ao jogador
@@ -209,10 +257,10 @@ class GameModel {
     // Se a fase completada for a última desbloqueada, avança
     if (levelId === this.state.unlockedLevel && levelId < this.levels.length) {
       this.state.unlockedLevel++
-      
+
       // Premia com uma skin ao completar a fase
       this.unlockLevelRewardSkin(levelId)
-      
+
       this.saveState()
     }
   }
@@ -221,19 +269,20 @@ class GameModel {
   unlockLevelRewardSkin(levelId) {
     // Define qual skin é desbloqueada em cada fase
     const rewardSkins = {
-      1: "avatar_fada",           // Fase 1 -> Fada Mágica
-      2: "avatar_pirata",         // Fase 2 -> Pirata
-      3: "avatar_mago"            // Fase 3 -> Mago
+      1: "avatar_fada", // Fase 1 -> Fada Mágica
+      2: "avatar_pirata", // Fase 2 -> Pirata
+      3: "avatar_mago", // Fase 3 -> Mago
+      4: "avatar_rainha", // Fase 4 -> Rainha
     }
-    
+
     const rewardSkinId = rewardSkins[levelId]
-    
+
     if (rewardSkinId && !this.hasSkin(rewardSkinId)) {
       this.state.ownedSkins.push(rewardSkinId)
       this.saveState()
       return rewardSkinId
     }
-    
+
     return null
   }
 
@@ -244,27 +293,27 @@ class GameModel {
 
   // Compra uma skin
   buySkin(skinId) {
-    const skin = this.skins.find(s => s.id === skinId)
-    
+    const skin = this.skins.find((s) => s.id === skinId)
+
     if (!skin) return { success: false, message: "Skin não encontrada!" }
-    
+
     if (this.hasSkin(skinId)) {
       return { success: false, message: "Você já possui esta skin!" }
     }
-    
+
     if (this.state.credits < skin.price) {
       return { success: false, message: "Créditos insuficientes!" }
     }
-    
+
     if (this.state.unlockedLevel < skin.unlockLevel) {
       return { success: false, message: "Complete mais fases para desbloquear!" }
     }
-    
+
     // Compra bem-sucedida
     this.removeCredits(skin.price)
     this.state.ownedSkins.push(skinId)
     this.saveState()
-    
+
     return { success: true, message: "Skin comprada com sucesso!" }
   }
 
@@ -273,26 +322,24 @@ class GameModel {
     if (!this.hasSkin(skinId)) {
       return { success: false, message: "Você não possui esta skin!" }
     }
-    
-    const skin = this.skins.find(s => s.id === skinId)
+
+    const skin = this.skins.find((s) => s.id === skinId)
     if (skin) {
       this.state.currentSkin = skin.image
       this.saveState()
       return { success: true, message: "Skin equipada!", skinPath: skin.image }
     }
-    
+
     return { success: false, message: "Erro ao equipar skin!" }
   }
 
   // Retorna skins disponíveis para o jogador
   getAvailableSkins() {
-    return this.skins.filter(skin => 
-      skin.isDefault || this.state.unlockedLevel >= skin.unlockLevel
-    )
+    return this.skins.filter((skin) => skin.isDefault || this.state.unlockedLevel >= skin.unlockLevel)
   }
 
   // Retorna informações de uma skin
   getSkinInfo(skinId) {
-    return this.skins.find(s => s.id === skinId)
+    return this.skins.find((s) => s.id === skinId)
   }
 }

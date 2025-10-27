@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sílabas Mágicas - Entrar</title>
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="logo-login">
+                    <span>SI</span>LABAS
+                    <br>
+                    MA<span>GI</span>CAS
+                </div>
+            </div>
+
+            <!-- Formulário de Login -->
+            <div id="login-form" class="form-section active">
+                <h2>Entrar</h2>
+                <p class="subtitle">Digite seu nome e idade para continuar!</p>
+                
+                <div class="input-group">
+                    <label for="login-nome">👤 Nome</label>
+                    <input 
+                        type="text" 
+                        id="login-nome" 
+                        placeholder="Digite seu nome"
+                        maxlength="20"
+                        required
+                    >
+                </div>
+
+                <!-- Adicionado campo de idade no login para validação -->
+                <div class="input-group">
+                    <label for="login-idade">🎂 Idade</label>
+                    <input 
+                        type="number" 
+                        id="login-idade" 
+                        placeholder="Quantos anos você tem?"
+                        min="3"
+                        max="15"
+                        required
+                    >
+                </div>
+
+                <button id="btn-login" class="btn-primary">Entrar</button>
+                
+                <p class="switch-text">
+                    Primeira vez aqui? 
+                    <a href="#" id="switch-to-cadastro">Criar conta</a>
+                </p>
+
+                <div id="login-message" class="message"></div>
+            </div>
+
+            <!-- Formulário de Cadastro -->
+            <div id="cadastro-form" class="form-section">
+                <h2>Criar Conta</h2>
+                <p class="subtitle">Preencha para começar a jogar!</p>
+                
+                <div class="input-group">
+                    <label for="cadastro-nome">👤 Nome</label>
+                    <input 
+                        type="text" 
+                        id="cadastro-nome" 
+                        placeholder="Digite seu nome"
+                        maxlength="20"
+                        required
+                    >
+                </div>
+
+                <div class="input-group">
+                    <label for="cadastro-idade">🎂 Idade</label>
+                    <input 
+                        type="number" 
+                        id="cadastro-idade" 
+                        placeholder="Quantos anos você tem?"
+                        min="3"
+                        max="15"
+                        required
+                    >
+                </div>
+
+                <button id="btn-cadastro" class="btn-primary">Criar Conta</button>
+                
+                <p class="switch-text">
+                    Já tem uma conta? 
+                    <a href="#" id="switch-to-login">Entrar</a>
+                </p>
+
+                <div id="cadastro-message" class="message"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/login.js"></script>
+</body>
+</html>

@@ -5,47 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sílabas Mágicas</title>
     <link rel="stylesheet" href="css/style.css">
+    
 </head>
 <body>
+
+     <a href="credits.html" class="btn-creditos">Créditos</a>
 
     <div id="game-container">
 
         <div id="home-view" class="view">
             <div class="content">
-                <div id="audio-controls">
-                    <button id="btn-music" title="Ligar/Desligar Música">🎵</button>
-                    <button id="btn-sfx" title="Ligar/Desligar Efeitos">🔊</button>
-                </div>
                 <div class="logo">
                     <span>SI</span>LABAS
                     <br>
                     MA<span>GI</span>CAS
                 </div>
-                <button id="play-button" class="btn-play-new">JOGAR</button> <br>
-                <a href="credits.html"><button id="credit-button" class="btn-credits-new">creditos</button></a>
+                <button id="play-button" class="btn-play-new">JOGAR</button>
                 <div id="credits-display-home" class="credits-display">💰 0</div>
+                
             </div>
         </div>
 
         <div id="level-select-view" class="view" style="display: none;">
             <h2>Seleção de Fases</h2>
-            <div id="level-grid" class="level-grid">
-                </div>
+            <div id="level-grid" class="level-grid"></div>
             <div id="credits-display-levels" class="credits-display"></div>
             <button id="back-to-home-button" class="btn-back">⬅ Voltar</button>
             <button id="shop-button-from-levels" class="btn-shop">🛒 Loja</button>
         </div>
 
-        <div id="game-view" class="view" style="display: none;">
-            </div>
+        <div id="game-view" class="view" style="display: none;"></div>
 
         <div id="shop-view" class="view" style="display: none;">
             <h2>🛒 Loja de Skins</h2>
             <div id="credits-display-shop" class="credits-display"></div>
             <div id="skins-grid" class="skins-grid"></div>
             <button id="back-to-levels-button" class="btn-back">⬅ Voltar</button>
-            <div id="audio-controls">
-        </div>
         </div>
 
     </div>
@@ -58,92 +53,6 @@
     <script src="js/controllers/GameController.js"></script>
     <script src="js/views/AvatarAssistant.js"></script>
     <script src="js/app.js"></script>
-
-    <!-- Botões de áudio -->
-<div id="audio-controls">
-    <button id="btn-music" title="Ligar/Desligar Música">🎵</button>
-    <button id="btn-sfx" title="Ligar/Desligar Efeitos">🔊</button>
-</div>
-
-<style>
-#audio-controls {
-    position: fixed;
-    bottom: 850px;
-    right: 23px;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    z-index: 9999;
-}
-
-#audio-controls button {
-    background-color: rgba(255, 255, 255, 0.6);
-    border: none;
-    border-radius: 8px;
-    width: 32px;
-    height: 32px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: 0.2s;
-}
-
-#audio-controls button:hover {
-    background-color: rgba(255, 255, 255, 0.85);
-}
-
-#audio-controls button.off {
-    opacity: 0.5;
-}
-</style>
-
-<script>
-// Simulação de áudio e efeitos (substitua por seus próprios sons)
-let backgroundMusic = new Audio('audio/music.mp3');
-backgroundMusic.loop = true;
-backgroundMusic.volume = 0.5;
-
-let clickSound = new Audio('audio/click.mp3');
-clickSound.volume = 0.6;
-
-// Estado inicial
-let musicOn = true;
-let sfxOn = true;
-
-// Inicia música automaticamente
-backgroundMusic.play().catch(() => {
-    console.log("A música só tocará após interação do usuário (restrição do navegador).");
-});
-
-// Botões
-const btnMusic = document.getElementById('btn-music');
-const btnSfx = document.getElementById('btn-sfx');
-
-// Alternar música
-btnMusic.addEventListener('click', () => {
-    musicOn = !musicOn;
-    if (musicOn) {
-        backgroundMusic.play();
-        btnMusic.classList.remove('off');
-    } else {
-        backgroundMusic.pause();
-        btnMusic.classList.add('off');
-    }
-});
-
-// Alternar efeitos sonoros
-btnSfx.addEventListener('click', () => {
-    sfxOn = !sfxOn;
-    btnSfx.classList.toggle('off', !sfxOn);
-});
-
-// Exemplo de som de clique (você pode usar dentro dos botões do jogo)
-document.addEventListener('click', (e) => {
-    if (sfxOn && e.target.tagName === 'BUTTON' && e.target.id !== 'btn-sfx' && e.target.id !== 'btn-music') {
-        clickSound.currentTime = 0;
-        clickSound.play();
-    }
-});
-</script>
 
 </body>
 </html>

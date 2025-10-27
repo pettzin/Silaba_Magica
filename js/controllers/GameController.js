@@ -33,7 +33,13 @@ class GameController {
   _setBodyBackground(levelId = null) {
     const body = document.body
 
-    body.classList.remove("default-background", "game-background", "game-background-2", "game-background-3")
+    body.classList.remove(
+      "default-background",
+      "game-background",
+      "game-background-2",
+      "game-background-3",
+      "game-background-4",
+    )
 
     if (levelId === 1) {
       // Fase 1: usa a imagem blur como background
@@ -42,7 +48,11 @@ class GameController {
       // Fase 2: usa a imagem blur do menino e cachorro
       body.classList.add("game-background-2")
     } else if (levelId === 3) {
+      // Fase 3: usa a imagem blur da bola da alegria
       body.classList.add("game-background-3")
+    } else if (levelId === 4) {
+      // Fase 4: usa a imagem blur da princesa feliz
+      body.classList.add("game-background-4")
     } else {
       // Todas as outras telas: background padrão #333
       body.classList.add("default-background")
@@ -70,11 +80,11 @@ class GameController {
     this._updateAllCredits()
     this._setBodyBackground()
     this.views.home.show()
-    
+
     // Mensagem do avatar
     if (this.avatar) {
       setTimeout(() => {
-        this.avatar.showRandomMessage('home')
+        this.avatar.showRandomMessage("home")
       }, 500)
     }
   }
@@ -88,11 +98,11 @@ class GameController {
     this.views.levelSelect.render(this.model.levels, this.model.state.unlockedLevel, this.showGame)
 
     this.views.levelSelect.show()
-    
+
     // Mensagem do avatar
     if (this.avatar) {
       setTimeout(() => {
-        this.avatar.showRandomMessage('levelSelect')
+        this.avatar.showRandomMessage("levelSelect")
       }, 500)
     }
   }
@@ -108,11 +118,11 @@ class GameController {
     this.views.game.render(levelData, () => this.handleLevelComplete(levelId))
     this.views.game.bindBackButton(this.showLevelSelect)
     this.views.game.show()
-    
+
     // Mensagem do avatar
     if (this.avatar) {
       setTimeout(() => {
-        this.avatar.showRandomMessage('gameStart')
+        this.avatar.showRandomMessage("gameStart")
       }, 500)
     }
   }
@@ -122,47 +132,47 @@ class GameController {
     this._hideAllViews()
     this._updateAllCredits()
     this._setBodyBackground()
-    
+
     // Renderiza a loja com as skins disponíveis
     const availableSkins = this.model.getAvailableSkins()
     const ownedSkins = this.model.state.ownedSkins
     const currentSkin = this.model.state.currentSkin
-    
+
     console.log("Skins disponíveis:", availableSkins)
     console.log("Skins possuídas:", ownedSkins)
     console.log("Skin atual:", currentSkin)
-    
+
     this.views.shop.render(
       availableSkins,
       ownedSkins,
       currentSkin,
       (skinId) => this.handleBuySkin(skinId),
-      (skinId) => this.handleEquipSkin(skinId)
+      (skinId) => this.handleEquipSkin(skinId),
     )
-    
+
     this.views.shop.show()
     console.log("Loja exibida!")
-    
+
     // Mensagem do avatar
     if (this.avatar) {
       setTimeout(() => {
-        this.avatar.showRandomMessage('shop')
+        this.avatar.showRandomMessage("shop")
       }, 500)
     }
   }
 
   handleBuySkin(skinId) {
     const result = this.model.buySkin(skinId)
-    
+
     if (result.success) {
       this.views.shop.showMessage(result.message, "success")
       this._updateAllCredits()
-      
+
       // Re-renderiza a loja
       setTimeout(() => {
         this.showShop()
       }, 1000)
-      
+
       // Celebra com o avatar
       if (this.avatar) {
         this.avatar.celebrate()
@@ -174,16 +184,16 @@ class GameController {
 
   handleEquipSkin(skinId) {
     const result = this.model.equipSkin(skinId)
-    
+
     if (result.success) {
       this.views.shop.showMessage(result.message, "success")
-      
+
       // Atualiza a skin do avatar
       if (this.avatar && result.skinPath) {
         this.avatar.changeSkin(result.skinPath)
         this.avatar.celebrate()
       }
-      
+
       // Re-renderiza a loja
       setTimeout(() => {
         this.showShop()
@@ -196,13 +206,13 @@ class GameController {
   handleLevelComplete(levelId) {
     console.log(`Fase ${levelId} completa!`)
     this.model.completeLevel(levelId)
-    
+
     // Celebração do avatar
     if (this.avatar) {
       this.avatar.celebrate()
-      this.avatar.showRandomMessage('gameComplete')
+      this.avatar.showRandomMessage("gameComplete")
     }
-    
+
     // Aguarda um pouco antes de voltar
     setTimeout(() => {
       this.showLevelSelect()

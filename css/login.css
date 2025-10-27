@@ -1,0 +1,129 @@
+/* =============================
+   Estilos gerais da página
+============================= */
+body {
+    font-family: Arial, sans-serif;
+    background: #e0d7f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Container do login */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+/* Card do login/cadastro */
+.login-card {
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    width: 350px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+/* Logo do jogo */
+.logo-login {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.logo-login span {
+    color: #9b59b6;
+}
+
+/* Seções de formulário */
+.form-section {
+    display: none;
+    flex-direction: column;
+}
+
+.form-section.active {
+    display: flex;
+}
+
+/* Campos de input */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.input-group label {
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.input-group input {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+/* Botões */
+.btn-primary {
+    padding: 10px 20px;
+    background: #9b59b6;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+.btn-primary:hover {
+    background: #8e44ad;
+}
+
+.btn-primary:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+/* Texto para alternar formulário */
+.switch-text {
+    margin-top: 10px;
+    font-size: 13px;
+}
+
+.switch-text a {
+    color: #9b59b6;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.switch-text a:hover {
+    text-decoration: underline;
+}
+
+/* Mensagens de sucesso/erro */
+.message {
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.message.show {
+    opacity: 1;
+}
+
+.message.error {
+    color: red;
+}
+
+.message.success {
+    color: green;
+}
