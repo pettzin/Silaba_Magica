@@ -1,5 +1,50 @@
-// URL da API
-const API_URL = 'http://localhost:3000/usuarios';
+// NOTE: migrating server-side persistence to localStorage.
+// Users are stored in localStorage under the key 'sm_users' as an array of objects:
+// { id, nome, idade, gameState, dataCriacao, ultimoAcesso }
+
+// constants / helpers for local storage
+const USERS_KEY = 'sm_users'
+
+function getUsers() {
+  try {
+    return JSON.parse(localStorage.getItem(USERS_KEY)) || []
+  } catch (e) {
+    console.error('Erro ao ler usuários do localStorage', e)
+    return []
+  }
+}
+
+function saveUsers(users) {
+  localStorage.setItem(USERS_KEY, JSON.stringify(users || []))
+}
+
+function findUser(nome, idade) {
+  const users = getUsers()
+  return users.find((u) => u.nome === nome.toLowerCase() && u.idade === idade)
+}
+
+function createUser(nome, idade) {
+  const users = getUsers()
+  const id = `u_${Date.now()}`
+  const newUser = {
+    id,
+    nome: nome.toLowerCase(),
+    idade,
+    gameState: {
+      credits: 0,
+      unlockedLevel: 1,
+      currentSkin: 'images/skins/default_male.png',
+      ownedSkins: ['default_male', 'default_female'],
+      musicEnabled: true,
+      soundEffectsEnabled: true,
+    },
+    dataCriacao: new Date().toISOString(),
+    ultimoAcesso: new Date().toISOString(),
+  }
+  users.push(newUser)
+  saveUsers(users)
+  return newUser
+}
 
 // Elementos do DOM
 const loginForm = document.getElementById('login-form');
@@ -33,8 +78,8 @@ switchToLogin.addEventListener('click', (e) => {
   clearMessages();
 });
 
-// Login
-btnLogin.addEventListener('click', async () => {
+// Login (local usando localStorage)
+btnLogin.addEventListener('click', () => {
   const nome = loginNome.value.trim();
   const idade = parseInt(loginIdade.value);
 
@@ -43,48 +88,44 @@ btnLogin.addEventListener('click', async () => {
     return;
   }
 
+  btnLogin.disabled = true;
+  btnLogin.classList.add('loading');
+
   try {
-    btnLogin.disabled = true;
-    btnLogin.classList.add('loading');
+    const usuario = findUser(nome, idade)
+    if (!usuario) {
+      showMessage(loginMessage, 'Nome ou idade incorretos! Verifique seus dados.', 'error')
+    } else {
+      // atualiza último acesso
+      usuario.ultimoAcesso = new Date().toISOString()
+      const users = getUsers().map((u) => (u.id === usuario.id ? usuario : u))
+      saveUsers(users)
 
-    const response = await fetch(`${API_URL}/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ nome, idade }) // envia ambos
-    });
+      showMessage(loginMessage, `Bem-vindo de volta, ${usuario.nome}! 🎮`, 'success')
 
-    const data = await response.json();
-
-    if (data.success) {
-      showMessage(loginMessage, data.message, 'success');
-
-      // Salva dados do usuário
       localStorage.setItem('currentUser', JSON.stringify({
-        id: data.user.id,
-        nome: data.user.nome,
-        idade: data.user.idade
-      }));
+        id: usuario.id,
+        nome: usuario.nome,
+        idade: usuario.idade,
+      }))
 
-      localStorage.setItem('silabasMagicasState', JSON.stringify(data.user.gameState));
+      localStorage.setItem('silabasMagicasState', JSON.stringify(usuario.gameState))
 
       setTimeout(() => {
-        window.location.href = 'index.html';
-      }, 1000);
-    } else {
-      showMessage(loginMessage, data.message, 'error');
+        window.location.href = 'index.html'
+      }, 800)
     }
-
   } catch (error) {
-    console.error('Erro ao fazer login:', error);
-    showMessage(loginMessage, 'Erro de conexão! Tente novamente.', 'error');
+    console.error('Erro ao fazer login (local):', error)
+    showMessage(loginMessage, 'Erro interno! Tente novamente.', 'error')
   } finally {
     btnLogin.disabled = false;
     btnLogin.classList.remove('loading');
   }
-});
+})
 
-// Cadastro
-btnCadastro.addEventListener('click', async () => {
+// Cadastro (local usando localStorage)
+btnCadastro.addEventListener('click', () => {
   const nome = cadastroNome.value.trim();
   const idade = parseInt(cadastroIdade.value);
 
@@ -98,46 +139,37 @@ btnCadastro.addEventListener('click', async () => {
     return;
   }
 
+  btnCadastro.disabled = true;
+  btnCadastro.classList.add('loading');
+
   try {
-    btnCadastro.disabled = true;
-    btnCadastro.classList.add('loading');
+    const exists = findUser(nome, idade)
+    if (exists) {
+      showMessage(cadastroMessage, 'Já existe uma conta com esse nome e idade! Tente outro.', 'error')
+    } else {
+      const novo = createUser(nome, idade)
+      showMessage(cadastroMessage, 'Conta criada com sucesso! 🎉', 'success')
 
-    const response = await fetch(`${API_URL}/cadastrar`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ nome, idade })
-    });
-
-    const data = await response.json();
-
-    if (data.success) {
-      showMessage(cadastroMessage, data.message, 'success');
-
-      // Salva dados do usuário
       localStorage.setItem('currentUser', JSON.stringify({
-        id: data.user.id,
-        nome: data.user.nome,
-        idade: data.user.idade
-      }));
+        id: novo.id,
+        nome: novo.nome,
+        idade: novo.idade,
+      }))
 
-      localStorage.setItem('silabasMagicasState', JSON.stringify(data.user.gameState));
+      localStorage.setItem('silabasMagicasState', JSON.stringify(novo.gameState))
 
       setTimeout(() => {
-        window.location.href = 'index.html';
-      }, 1000);
-
-    } else {
-      showMessage(cadastroMessage, data.message, 'error');
+        window.location.href = 'index.html'
+      }, 800)
     }
-
   } catch (error) {
-    console.error('Erro ao cadastrar:', error);
-    showMessage(cadastroMessage, 'Erro de conexão! Tente novamente.', 'error');
+    console.error('Erro ao cadastrar (local):', error)
+    showMessage(cadastroMessage, 'Erro interno! Tente novamente.', 'error')
   } finally {
     btnCadastro.disabled = false;
     btnCadastro.classList.remove('loading');
   }
-});
+})
 
 // Permitir Enter para submeter
 loginNome.addEventListener('keypress', (e) => {

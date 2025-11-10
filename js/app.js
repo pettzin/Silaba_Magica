@@ -3,12 +3,12 @@ document.addEventListener("DOMContentLoaded", () => {
   // =============================
   // Verifica se o usuário está logado
   // =============================
-  const currentUser = JSON.parse(localStorage.getItem('currentUser'))
-  const gameState = JSON.parse(localStorage.getItem('silabasMagicasState'))
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"))
+  const gameState = JSON.parse(localStorage.getItem("silabasMagicasState"))
 
   if (!currentUser) {
     // Se não estiver logado, redireciona para a tela de login
-    window.location.href = 'login.html'
+    window.location.href = "login.html"
     return
   }
 
@@ -19,9 +19,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // =============================
   function updateCredits() {
     const credits = gameState?.credits ?? 0
-    const homeCredits = document.getElementById('credits-display-home')
-    const levelCredits = document.getElementById('credits-display-levels')
-    const shopCredits = document.getElementById('credits-display-shop')
+    const homeCredits = document.getElementById("credits-display-home")
+    const levelCredits = document.getElementById("credits-display-levels")
+    const shopCredits = document.getElementById("credits-display-shop")
 
     if (homeCredits) homeCredits.textContent = `💰 ${credits}`
     if (levelCredits) levelCredits.textContent = `💰 ${credits}`
@@ -33,23 +33,23 @@ document.addEventListener("DOMContentLoaded", () => {
   // =============================
   // Adiciona botão de logout na home
   // =============================
-  const homeContent = document.querySelector('#home-view .content')
+  const homeContent = document.querySelector("#home-view .content")
   if (homeContent) {
     // Saudação com nome
-    const userNameDisplay = document.createElement('p')
+    const userNameDisplay = document.createElement("p")
     userNameDisplay.textContent = `Olá, ${currentUser.nome}!`
-    userNameDisplay.style.fontWeight = 'bold'
-    userNameDisplay.style.marginTop = '10px'
-    homeContent.insertBefore(userNameDisplay, document.getElementById('play-button'))
+    userNameDisplay.style.fontWeight = "bold"
+    userNameDisplay.style.marginTop = "10px"
+    homeContent.insertBefore(userNameDisplay, document.getElementById("play-button"))
 
     // Botão de logout
-    const logoutBtn = document.createElement('button')
-    logoutBtn.textContent = 'Logout'
-    logoutBtn.classList.add('btn-logout')
-    logoutBtn.addEventListener('click', () => {
-      localStorage.removeItem('currentUser')
-      localStorage.removeItem('silabasMagicasState')
-      window.location.href = 'login.html'
+    const logoutBtn = document.createElement("button")
+    logoutBtn.textContent = "Logout"
+    logoutBtn.classList.add("btn-logout")
+    logoutBtn.addEventListener("click", () => {
+      localStorage.removeItem("currentUser")
+      localStorage.removeItem("silabasMagicasState")
+      window.location.href = "login.html"
     })
     homeContent.appendChild(logoutBtn)
   }
@@ -82,23 +82,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
   console.log("Sílabas Mágicas iniciado!")
 
+  // =============================
+  // Botão de Créditos no canto
+  // =============================
+  const createCreditsButton = () => {
+    const existingBtn = document.querySelector(".btn-creditos")
+    if (existingBtn) return // evita criar várias vezes
 
-// =============================
-// Botão de Créditos no canto
-// =============================
-const createCreditsButton = () => {
-  const existingBtn = document.querySelector('.btn-creditos')
-  if (existingBtn) return // evita criar várias vezes
+    const creditBtn = document.createElement("button")
+    creditBtn.textContent = "Créditos"
+    creditBtn.classList.add("btn-creditos")
+    creditBtn.addEventListener("click", () => {
+      // Abre a página de créditos
+      window.location.href = "creditos.html"
+    })
+    document.body.appendChild(creditBtn)
+  }
 
-  const creditBtn = document.createElement('button')
-  creditBtn.textContent = 'Créditos'
-  creditBtn.classList.add('btn-creditos')
-  creditBtn.addEventListener('click', () => {
-    // Abre a página de créditos
-    window.location.href = 'creditos.html'
-  })
-  document.body.appendChild(creditBtn)
-}
-
-// Cria o botão de créditos
-createCreditsButton()})
+  // Cria o botão de créditos
+  createCreditsButton()
+})

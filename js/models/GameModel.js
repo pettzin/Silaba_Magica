@@ -6,6 +6,8 @@ class GameModel {
       unlockedLevel: 1,
       currentSkin: "images/skins/default_male.png",
       ownedSkins: ["default_male", "default_female"],
+      musicEnabled: true,
+      soundEffectsEnabled: true,
     }
     // Carrega o estado do jogo ou usa o padrão
     this.state = this.loadState()
@@ -20,6 +22,7 @@ class GameModel {
         price: 0,
         unlockLevel: 0,
         isDefault: true,
+        rarity: "comum",
       },
       {
         id: "default_female",
@@ -28,71 +31,80 @@ class GameModel {
         price: 0,
         unlockLevel: 0,
         isDefault: true,
-      },
-      // Skins desbloqueáveis por fase
-      {
-        id: "avatar_fada",
-        name: "Fada Mágica",
-        image: "images/skins/avatar_fada.png",
-        price: 100,
-        unlockLevel: 1,
-        isDefault: false,
-      },
-      {
-        id: "avatar_pirata",
-        name: "Pirata",
-        image: "images/skins/avatar_pirata.png",
-        price: 150,
-        unlockLevel: 2,
-        isDefault: false,
+        rarity: "comum",
       },
       {
         id: "avatar_princesa",
         name: "Princesa",
         image: "images/skins/avatar_princesa.png",
-        price: 150,
+        price: 100,
         unlockLevel: 2,
         isDefault: false,
-      },
-      {
-        id: "avatar_cavaleiro_cosmico",
-        name: "Cavaleiro Cósmico",
-        image: "images/skins/avatar_cavaleiro_cosmico.png",
-        price: 200,
-        unlockLevel: 3,
-        isDefault: false,
-      },
-      {
-        id: "avatar_mago",
-        name: "Mago",
-        image: "images/skins/avatar_mago.png",
-        price: 200,
-        unlockLevel: 3,
-        isDefault: false,
+        rarity: "comum",
       },
       {
         id: "avatar_rainha",
         name: "Rainha",
         image: "images/skins/avatar_rainha.png",
-        price: 250,
+        price: 150,
         unlockLevel: 4,
         isDefault: false,
+        rarity: "comum",
       },
       {
         id: "avatar_rei",
         name: "Rei",
         image: "images/skins/avatar_rei.png",
-        price: 250,
+        price: 150,
         unlockLevel: 4,
         isDefault: false,
+        rarity: "comum",
+      },
+      {
+        id: "avatar_fada",
+        name: "Fada Mágica",
+        image: "images/skins/avatar_fada.png",
+        price: 200,
+        unlockLevel: 1,
+        isDefault: false,
+        rarity: "rara",
+      },
+      {
+        id: "avatar_pirata",
+        name: "Pirata",
+        image: "images/skins/avatar_pirata.png",
+        price: 250,
+        unlockLevel: 2,
+        isDefault: false,
+        rarity: "rara",
+      },
+      {
+        id: "avatar_mago",
+        name: "Mago",
+        image: "images/skins/avatar_mago.png",
+        price: 250,
+        unlockLevel: 3,
+        isDefault: false,
+        rarity: "rara",
+      },    
+
+      {
+        id: "avatar_cavaleiro_cosmico",
+        name: "Cavaleiro Cósmico",
+        image: "images/skins/avatar_cavaleiro_cosmico.png",
+        price: 300,
+        unlockLevel: 3,
+        isDefault: false,
+        rarity: "lendária",
       },
       {
         id: "avatar_fada_celestial",
         name: "Fada Celestial",
         image: "images/skins/avatar_fada_celestial.png",
-        price: 300,
+        price: 350,
         unlockLevel: 5,
         isDefault: false,
+        rarity: "lendária",
       },
       {
         id: "avatar_dragao",
@@ -101,14 +113,16 @@ class GameModel {
         price: 350,
         unlockLevel: 5,
         isDefault: false,
+        rarity: "lendária",
       },
       {
         id: "avatar_guerreiro_elemental",
         name: "Guerreiro Elemental",
         image: "images/skins/avatar_guerreiro_elemental.png",
-        price: 400,
+        price: 500,
         unlockLevel: 5,
         isDefault: false,
+        rarity: "lendária",
       },
     ]
 
@@ -126,7 +140,7 @@ class GameModel {
         objective: "Encontre a sílaba <strong>BO</strong> para completar a história!",
         syllables: ["BO"],
         reward: 100,
-        rewardSkin: "avatar_fada", // Fada Mágica
+        rewardSkin: "avatar_fada",
       },
       {
         id: 2,
@@ -140,7 +154,7 @@ class GameModel {
         objective: "Encontre as sílabas <strong>NI</strong> e <strong>SA</strong> para completar a história!",
         syllables: ["NI", "SA"],
         reward: 200,
-        rewardSkin: "avatar_pirata", // Pirata
+        rewardSkin: "avatar_pirata",
       },
       {
         id: 3,
@@ -156,7 +170,7 @@ class GameModel {
           "Encontre as sílabas <strong>LA</strong>, <strong>CA</strong> e <strong>TI</strong> para completar a história!",
         syllables: ["LA", "CA", "TI"],
         reward: 300,
-        rewardSkin: "avatar_mago", // Mago
+        rewardSkin: "avatar_mago",
       },
       {
         id: 4,
@@ -172,9 +186,30 @@ class GameModel {
           "Encontre as sílabas <strong>CE</strong>, <strong>RO</strong>, <strong>DIM</strong> e <strong>LHA</strong> para completar a história!",
         syllables: ["CE", "RO", "DIM", "LHA"],
         reward: 400,
-        rewardSkin: "avatar_rainha", // Rainha
+        rewardSkin: "avatar_rainha",
+      },
+      {
+        id: 5,
+        title: "A Aventura do Dinossauro",
+        image: "images/imagens/dinossauro.png",
+        story: `Um <span class="lacuna" data-silaba="DI">__</span>nossauro verde andava pelo campo.<br>
+                        Ele viu uma árvo<span class="lacuna" data-silaba="RE">__</span> cheia de frutas.<br>
+                        Pegou uma fruta e comeu devagar.<br>
+                        Depois encontrou um rio <span class="lacuna" data-silaba="BRI">___</span>lhando ao sol.<br>
+                        Be<span class="lacuna" data-silaba="BEU">___</span> da água e ficou refrescado.<br>
+                        Um pássa<span class="lacuna" data-silaba="RO">__</span> passou voando no céu.<br>
+                        O dinossauro sorriu e acenou feliz.`,
+        objective:
+          "Encontre as sílabas <strong>DI</strong>, <strong>RE</strong>, <strong>BRI</strong>, <strong>BEU</strong> e <strong>RO</strong> para completar a história!",
+        syllables: ["DI", "RE", "BRI", "BEU", "RO"],
+        reward: 500,
+        rewardSkin: "avatar_fada_celestial",
       },
     ]
+
+    this.backgroundMusic = new Audio("audios/musica/musicaFundo.mp3")
+    this.backgroundMusic.loop = true
+    this.backgroundMusic.volume = 0.4
   }
 
   // Carrega o progresso do jogador
@@ -188,6 +223,8 @@ class GameModel {
         unlockedLevel: parsed.unlockedLevel || 1,
         currentSkin: parsed.currentSkin || "images/skins/default_male.png",
         ownedSkins: parsed.ownedSkins || ["default_male", "default_female"],
+        musicEnabled: parsed.musicEnabled !== undefined ? parsed.musicEnabled : true,
+        soundEffectsEnabled: parsed.soundEffectsEnabled !== undefined ? parsed.soundEffectsEnabled : true,
       }
     }
     return this.defaultState
@@ -203,6 +240,7 @@ class GameModel {
 
   // Sincroniza o progresso com o servidor
   async syncWithServer() {
+    // Agora persistimos localmente no localStorage (sm_users)
     const currentUser = JSON.parse(localStorage.getItem("currentUser"))
 
     if (!currentUser || !currentUser.id) {
@@ -210,23 +248,32 @@ class GameModel {
     }
 
     try {
-      const response = await fetch(`http://localhost:3000/usuarios/salvar-progresso/${currentUser.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+      const USERS_KEY = 'sm_users'
+      const usersRaw = localStorage.getItem(USERS_KEY)
+      const users = usersRaw ? JSON.parse(usersRaw) : []
+
+      const idx = users.findIndex((u) => u.id === currentUser.id)
+      if (idx !== -1) {
+        users[idx].gameState = this.state
+        users[idx].ultimoAcesso = new Date().toISOString()
+        localStorage.setItem(USERS_KEY, JSON.stringify(users))
+        console.log('Progresso salvo em localStorage para', currentUser.id)
+      } else {
+        // Caso não exista, cria um registro local (útil se o usuário foi criado em outro dispositivo)
+        const newUser = {
+          id: currentUser.id,
+          nome: currentUser.nome ? currentUser.nome.toLowerCase() : 'unknown',
+          idade: currentUser.idade || 0,
           gameState: this.state,
-        }),
-      })
-
-      const data = await response.json()
-
-      if (data.success) {
-        console.log("Progresso salvo no servidor!")
+          dataCriacao: new Date().toISOString(),
+          ultimoAcesso: new Date().toISOString(),
+        }
+        users.push(newUser)
+        localStorage.setItem(USERS_KEY, JSON.stringify(users))
+        console.log('Novo usuário criado em localStorage:', currentUser.id)
       }
     } catch (error) {
-      console.error("Erro ao sincronizar com servidor:", error)
+      console.error('Erro ao salvar progresso em localStorage:', error)
     }
   }
 
@@ -257,33 +304,8 @@ class GameModel {
     // Se a fase completada for a última desbloqueada, avança
     if (levelId === this.state.unlockedLevel && levelId < this.levels.length) {
       this.state.unlockedLevel++
-
-      // Premia com uma skin ao completar a fase
-      this.unlockLevelRewardSkin(levelId)
-
       this.saveState()
     }
-  }
-
-  // Desbloqueia a skin de recompensa da fase
-  unlockLevelRewardSkin(levelId) {
-    // Define qual skin é desbloqueada em cada fase
-    const rewardSkins = {
-      1: "avatar_fada", // Fase 1 -> Fada Mágica
-      2: "avatar_pirata", // Fase 2 -> Pirata
-      3: "avatar_mago", // Fase 3 -> Mago
-      4: "avatar_rainha", // Fase 4 -> Rainha
-    }
-
-    const rewardSkinId = rewardSkins[levelId]
-
-    if (rewardSkinId && !this.hasSkin(rewardSkinId)) {
-      this.state.ownedSkins.push(rewardSkinId)
-      this.saveState()
-      return rewardSkinId
-    }
-
-    return null
   }
 
   // Verifica se o jogador possui uma skin
@@ -303,10 +325,6 @@ class GameModel {
 
     if (this.state.credits < skin.price) {
       return { success: false, message: "Créditos insuficientes!" }
-    }
-
-    if (this.state.unlockedLevel < skin.unlockLevel) {
-      return { success: false, message: "Complete mais fases para desbloquear!" }
     }
 
     // Compra bem-sucedida
@@ -335,11 +353,41 @@ class GameModel {
 
   // Retorna skins disponíveis para o jogador
   getAvailableSkins() {
-    return this.skins.filter((skin) => skin.isDefault || this.state.unlockedLevel >= skin.unlockLevel)
+    return this.skins
   }
 
   // Retorna informações de uma skin
   getSkinInfo(skinId) {
     return this.skins.find((s) => s.id === skinId)
   }
+
+  playBackgroundMusic() {
+    if (this.state.musicEnabled) {
+      this.backgroundMusic.play().catch((e) => console.log("Erro ao tocar música:", e))
+    }
+  }
+
+  stopBackgroundMusic() {
+    this.backgroundMusic.pause()
+    this.backgroundMusic.currentTime = 0
+  }
+
+  toggleMusic() {
+    this.state.musicEnabled = !this.state.musicEnabled
+    if (this.state.musicEnabled) {
+      this.playBackgroundMusic()
+    } else {
+      this.stopBackgroundMusic()
+    }
+    this.saveState()
+    return this.state.musicEnabled
+  }
+
+  toggleSoundEffects() {
+    this.state.soundEffectsEnabled = !this.state.soundEffectsEnabled
+    this.saveState()
+    return this.state.soundEffectsEnabled
+  }
 }
+
+window.GameModel = GameModel

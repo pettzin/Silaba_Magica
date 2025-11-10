@@ -4,6 +4,9 @@ class GameController {
     this.views = views // {home, levelSelect, game, shop}
     this.avatar = null // Avatar será adicionado depois
 
+    this.views.home.setModel(model)
+    this.views.game.setModel(model)
+
     // Garante que o 'this' dentro das funções sempre se refira ao controller
     this.showLevelSelect = this.showLevelSelect.bind(this)
     this.showGame = this.showGame.bind(this)
@@ -39,6 +42,7 @@ class GameController {
       "game-background-2",
       "game-background-3",
       "game-background-4",
+      "game-background-5",
     )
 
     if (levelId === 1) {
@@ -53,6 +57,9 @@ class GameController {
     } else if (levelId === 4) {
       // Fase 4: usa a imagem blur da princesa feliz
       body.classList.add("game-background-4")
+    } else if (levelId === 5) {
+      // Fase 5: usa a imagem blur da nova skin
+      body.classList.add("game-background-5")
     } else {
       // Todas as outras telas: background padrão #333
       body.classList.add("default-background")
@@ -79,6 +86,7 @@ class GameController {
     this._hideAllViews()
     this._updateAllCredits()
     this._setBodyBackground()
+    this.model.stopBackgroundMusic()
     this.views.home.show()
 
     // Mensagem do avatar
@@ -93,6 +101,7 @@ class GameController {
     this._hideAllViews()
     this._updateAllCredits()
     this._setBodyBackground()
+    this.model.stopBackgroundMusic()
 
     // Renderiza a grade de fases com os dados mais recentes do modelo
     this.views.levelSelect.render(this.model.levels, this.model.state.unlockedLevel, this.showGame)
@@ -113,6 +122,7 @@ class GameController {
 
     this._hideAllViews()
     this._setBodyBackground(levelId)
+    this.model.playBackgroundMusic()
 
     // Renderiza a tela do jogo
     this.views.game.render(levelData, () => this.handleLevelComplete(levelId))
@@ -132,6 +142,7 @@ class GameController {
     this._hideAllViews()
     this._updateAllCredits()
     this._setBodyBackground()
+    this.model.stopBackgroundMusic()
 
     // Renderiza a loja com as skins disponíveis
     const availableSkins = this.model.getAvailableSkins()
@@ -219,3 +230,5 @@ class GameController {
     }, 1500)
   }
 }
+
+window.GameController = GameController
