@@ -62,7 +62,18 @@ body.game-background-4 {
   background-attachment: fixed;
 }
 
-body.game-background-4::before {
+/* Adicionando background para a Fase 5 - A Aventura do Dinossauro */
+body.game-background-5 {
+  background-color: #333;
+  background-image: url("../images/backgrounds/blur_dinossauro.png");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+body.game-background-4::before,
+body.game-background-5::before {
   content: "";
   position: fixed;
   top: 0;
@@ -125,7 +136,7 @@ body.game-background-3::before {
   color: white;
   width: 100%;
   padding: 20px;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: transparent;
   border-radius: 15px;
 }
 
@@ -159,6 +170,86 @@ body.game-background-3::before {
 
 .btn-play-new:hover {
   transform: scale(1.05);
+}
+
+.btn-logout {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  background: #e74c3c;
+  color: white;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.btn-logout:hover {
+  background: #c0392b;
+}
+
+.btn-creditos {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  background: #9b59b6;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.btn-creditos:hover {
+  background: #8e44ad;
+}
+
+/* Estilos para os botões de controle de audio */
+.audio-controls {
+  position: fixed;
+  top: 60px;
+  right: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 1000;
+}
+
+/* Botões agora são menores e mostram apenas emojis */
+.audio-control-btn {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+.audio-control-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, #764ba2, #667eea);
+}
+
+.audio-control-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 /* --- DISPLAY DE CRÉDITOS --- */
@@ -222,24 +313,12 @@ body.game-background-3::before {
   cursor: not-allowed;
 }
 
-.level-button.coming-soon {
-  background-color: #ffa500;
-  color: white;
-  cursor: not-allowed;
-  position: relative;
-}
-
-.level-button.coming-soon:hover {
-  transform: none;
-}
-
 /* --- TELA DE JOGO --- */
 #game-view {
   padding: 10px;
   justify-content: flex-start;
 }
 
-/* Card principal */
 .game-card {
   background: linear-gradient(145deg, #f0f0f0, #e8e8e8);
   border-radius: 10px;
@@ -250,7 +329,6 @@ body.game-background-3::before {
   border: 3px solid #d0d0d0;
 }
 
-/* Cabeçalho roxo */
 .game-header {
   background: linear-gradient(135deg, #c2185b, #ad1457);
   color: white;
@@ -291,7 +369,6 @@ body.game-background-3::before {
   justify-content: center;
 }
 
-/* Imagem de referência */
 .reference-image-container {
   text-align: center;
   margin-bottom: 20px;
@@ -307,7 +384,6 @@ body.game-background-3::before {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* Texto da história */
 .story-section {
   margin-bottom: 20px;
 }
@@ -322,7 +398,6 @@ body.game-background-3::before {
   color: #333;
 }
 
-/* Banner objetivo */
 .objective-banner {
   background: linear-gradient(135deg, #c2185b, #ad1457);
   color: white;
@@ -334,10 +409,9 @@ body.game-background-3::before {
   font-size: 0.9rem;
 }
 
-/* Área da dica */
 .syllable-info {
   display: flex;
-  justify-content: space-between; /* DICA à esquerda, botão à direita */
+  justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
   padding: 0 10px;
@@ -370,7 +444,6 @@ body.game-background-3::before {
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
 }
 
-/* Caça-sílabas */
 .hunt-section {
   background: linear-gradient(135deg, #f789b7, #f883bd);
   border-radius: 15px;
@@ -443,7 +516,6 @@ body.game-background-3::before {
   }
 }
 
-/* Feedback */
 .feedback {
   margin-top: 15px;
   padding: 12px;
@@ -488,186 +560,240 @@ body.game-background-3::before {
   }
 }
 
-/* ===== LOJA DE SKINS COMPLETA ===== */
-
+/* --- LOJA DE SKINS --- */
 #shop-view {
-  background: linear-gradient(135deg, #8ec5fc, #e0c3fc);
-  display: flex;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+  overflow: hidden;
+  display: none;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
-  overflow-y: auto;
-  border-radius: 20px;
+  justify-content: flex-start;
+  height: 100%;
 }
 
 #shop-view h2 {
-  color: #fff;
-  font-size: 2.2rem;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-  margin-bottom: 25px;
-}
-
-#credits-display-shop {
-  background-color: rgba(0, 0, 0, 0.4);
-  color: #ffd700;
-  padding: 10px 20px;
-  border-radius: 20px;
-  font-size: 1.1rem;
-  font-weight: bold;
-  margin-bottom: 20px;
-  border: 2px solid #fff59d;
+  color: white;
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 2rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .skins-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  max-width: 500px;
   width: 100%;
-  max-width: 700px;
-  padding-bottom: 100px;
+  margin: 0 auto;
+  padding: 10px 0 80px 0;
+  max-height: calc(100vh - 180px);
+  overflow: visible;
 }
 
 .skin-card {
-  background: #fff;
-  border-radius: 15px;
-  padding: 12px;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
-  text-align: center;
-  transition: all 0.3s ease;
-  border: 3px solid transparent;
+  background: white;
+  border-radius: 12px;
+  padding: 8px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  border: 3px solid #b794f6;
+  position: relative;
+  overflow: visible;
+}
+
+.skin-card.rarity-comum {
+  border-color: #3b82f6;
+  background: linear-gradient(145deg, #ffffff, #f0f9ff);
+}
+
+.skin-card.rarity-rara {
+  border-color: #a855f7;
+  background: linear-gradient(145deg, #ffffff, #faf5ff);
+}
+
+.skin-card.rarity-lendária {
+  border-color: #fbbf24;
+  background: linear-gradient(145deg, #ffffff, #fffbeb);
+  box-shadow: 0 8px 25px rgba(251, 191, 36, 0.4);
 }
 
 .skin-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
-  border-color: #b39ddb;
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+.skin-card.rarity-lendária:hover {
+  box-shadow: 0 12px 35px rgba(251, 191, 36, 0.6);
 }
 
 .skin-card.equipped {
-  border-color: #4caf50;
-  background: linear-gradient(145deg, #ffffff, #e8f5e9);
+  border-color: #10b981;
+  background: linear-gradient(145deg, #ffffff, #ecfdf5);
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
 }
 
 .skin-card.locked {
-  opacity: 0.7;
-  filter: grayscale(60%);
+  opacity: 0.75;
 }
 
-/* Raridades */
-.skin-card.common {
-  border-color: #9e9e9e;
+.rarity-badge {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  padding: 3px 6px;
+  border-radius: 4px;
+  font-size: 0.6rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 5;
+  border: 1px solid rgba(255, 255, 255, 0.8);
 }
 
-.skin-card.rare {
-  border-color: #2196f3;
+.rarity-badge.rarity-comum {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
 }
 
-.skin-card.epic {
-  border-color: #9c27b0;
+.rarity-badge.rarity-rara {
+  background: linear-gradient(135deg, #a855f7, #9333ea);
+  color: white;
 }
 
-.skin-card.legendary {
-  border-color: #ffc107;
-  box-shadow: 0 0 15px 3px rgba(255, 193, 7, 0.7);
+.rarity-badge.rarity-lendária {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  color: #78350f;
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0%,
+  100% {
+    box-shadow: 0 2px 6px rgba(251, 191, 36, 0.4);
+  }
+  50% {
+    box-shadow: 0 2px 12px rgba(251, 191, 36, 0.8);
+  }
 }
 
 .skin-image-container {
-  height: 100px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 8px;
   position: relative;
-  background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
-  border-radius: 8px;
-}
-
-.small-image {
-  width: 70px;
-  height: auto;
-  object-fit: contain;
-  image-rendering: crisp-edges;
-}
-
-.equipped-badge {
-  position: absolute;
-  top: 6px;
-  right: 6px;
-  background: #4caf50;
-  color: white;
-  padding: 4px 6px;
-  border-radius: 6px;
-  font-size: 0.7rem;
-  font-weight: bold;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.locked-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  height: 80px;
+  background: linear-gradient(135deg, #fde68a 0%, #fbbf24 25%, #a78bfa 50%, #c084fc 75%, #818cf8 100%);
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 3rem;
-  color: white;
-  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 6px;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.skin-image {
+  max-width: 85%;
+  max-height: 65px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.25));
+  transition: transform 0.3s ease;
+}
+
+.skin-card:hover .skin-image {
+  transform: scale(1.05);
+}
+
+/* Removendo locked-overlay antigo e adicionando lock-badge no canto direito */
+.lock-badge {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 1.2rem;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+  backdrop-filter: blur(4px);
+}
+
+.skin-info {
+  flex: 1;
+  text-align: center;
+  margin-bottom: 6px;
 }
 
 .skin-name {
-  font-size: 1rem;
+  font-size: 0.8rem;
+  color: #1f2937;
+  margin: 0 0 3px 0;
   font-weight: bold;
-  color: #333;
-  margin-bottom: 3px;
 }
 
 .skin-unlock {
-  font-size: 0.8rem;
-  color: #555;
+  font-size: 0.65rem;
+  color: #6b21a8;
+  margin: 0;
   font-style: italic;
-  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.skin-action {
+  width: 100%;
 }
 
 .btn-buy,
 .btn-equip,
 .btn-equipped {
   width: 100%;
+  padding: 6px;
   border: none;
   border-radius: 8px;
-  padding: 8px 10px;
   font-weight: bold;
+  font-size: 0.75rem;
   cursor: pointer;
-  transition: all 0.2s ease;
-  font-family: 'Comic Sans MS', cursive;
+  transition: all 0.3s ease;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
 }
 
 .btn-buy {
-  background: linear-gradient(135deg, #ff9800, #f57c00);
+  background: linear-gradient(135deg, #f59e0b, #ef4444);
   color: white;
 }
 
 .btn-buy:hover {
   transform: scale(1.05);
-  box-shadow: 0 3px 8px rgba(245, 124, 0, 0.5);
+  box-shadow: 0 6px 15px rgba(239, 68, 68, 0.5);
 }
 
 .btn-equip {
-  background: linear-gradient(135deg, #4caf50, #45a049);
+  background: linear-gradient(135deg, #10b981, #059669);
   color: white;
 }
 
 .btn-equip:hover {
   transform: scale(1.05);
-  box-shadow: 0 3px 8px rgba(76, 175, 80, 0.5);
+  box-shadow: 0 6px 15px rgba(16, 185, 129, 0.5);
 }
 
 .btn-equipped {
-  background: #ccc;
-  color: #666;
+  background: #d1d5db;
+  color: #6b7280;
   cursor: not-allowed;
+  box-shadow: none;
 }
 
 .shop-message {
@@ -677,7 +803,7 @@ body.game-background-3::before {
   transform: translateX(-50%) translateY(-20px);
   background: white;
   color: #333;
-  padding: 12px 25px;
+  padding: 15px 25px;
   border-radius: 10px;
   font-weight: bold;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
@@ -685,8 +811,9 @@ body.game-background-3::before {
   visibility: hidden;
   transition: all 0.3s ease;
   z-index: 1001;
-  border: 3px solid #333;
+  max-width: 80%;
   text-align: center;
+  border: 3px solid #333;
 }
 
 .shop-message.show {
@@ -707,40 +834,25 @@ body.game-background-3::before {
   border-color: #c62828;
 }
 
-#back-to-levels-button {
-  margin-top: 20px;
-  padding: 10px 25px;
-  border-radius: 20px;
-  background: #fff;
-  border: none;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-#back-to-levels-button:hover {
-  background: #f0f0f0;
-  transform: scale(1.05);
-}
-
-
-.shop-items {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.shop-item {
-  background-color: rgba(255, 255, 255, 0.8);
-  padding: 20px;
-  border-radius: 10px;
-  cursor: pointer;
-  text-align: center;
+#shop-view .btn-back {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 999;
+  background: linear-gradient(135deg, #fff, #f0e7ff);
+  border: 3px solid #805ad5;
+  color: #805ad5;
   font-weight: bold;
+  padding: 12px 30px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 1rem;
 }
 
-.shop-item:hover {
-  background-color: white;
+#shop-view .btn-back:hover {
+  background: linear-gradient(135deg, #f0e7ff, #e9d8fd);
+  transform: translateX(-50%) scale(1.05);
 }
 
 .btn-back,
@@ -923,6 +1035,34 @@ body.game-background-3::before {
   }
 }
 
+.modal-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-restart {
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-restart:hover {
+  transform: translateY(-2px) rotate(180deg);
+  box-shadow: 0 7px 20px rgba(0, 0, 0, 0.3);
+}
+
 .btn-continue {
   background: linear-gradient(135deg, #4caf50, #45a049);
   color: white;
@@ -941,7 +1081,7 @@ body.game-background-3::before {
   box-shadow: 0 7px 20px rgba(0, 0, 0, 0.3);
 }
 
-/* --- AVATAR  --- */
+/* --- AVATAR --- */
 .avatar-container {
   position: fixed;
   bottom: 20px;
@@ -977,7 +1117,8 @@ body.game-background-3::before {
 }
 
 @keyframes avatarFloat {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px);
   }
   50% {
@@ -985,7 +1126,6 @@ body.game-background-3::before {
   }
 }
 
-/* Bolinha de notificação */
 .avatar-notification {
   position: absolute;
   top: -5px;
@@ -1010,7 +1150,8 @@ body.game-background-3::before {
 }
 
 @keyframes pulse-notification {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
     box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.7);
   }
@@ -1020,7 +1161,6 @@ body.game-background-3::before {
   }
 }
 
-/* Balão de fala estilo Minecraft */
 .avatar-speech-bubble {
   position: absolute;
   bottom: 170px;
@@ -1071,7 +1211,6 @@ body.game-background-3::before {
   transform: translateY(0);
 }
 
-/* Animação de entrada estilo Minecraft */
 .avatar-container.entering {
   animation: avatarEnter 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
@@ -1087,13 +1226,13 @@ body.game-background-3::before {
   }
 }
 
-/* Estados do avatar - estilo blocado */
 .avatar.happy {
   animation: avatarJump 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
 @keyframes avatarJump {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0);
   }
   50% {
@@ -1106,7 +1245,8 @@ body.game-background-3::before {
 }
 
 @keyframes avatarExcited {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1) rotate(0deg);
   }
   25% {
@@ -1117,13 +1257,13 @@ body.game-background-3::before {
   }
 }
 
-/* Efeito de caminhada */
 .avatar.walking {
   animation: avatarWalk 0.6s steps(4) infinite;
 }
 
 @keyframes avatarWalk {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px);
   }
   25% {
@@ -1134,331 +1274,130 @@ body.game-background-3::before {
   }
 }
 
-/* --- LOJA DE SKINS --- */
-/* --- LOJA DE SKINS --- */
-#shop-view {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 20px;
-  overflow-y: auto;
-  display: none;
-  flex-direction: column;
-  align-items: center;
-}
-
-#shop-view h2 {
-  color: white;
-  text-align: center;
-  margin-bottom: 20px;
-  font-size: 2rem;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.skins-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 15px;
-  max-width: 500px;
-  width: 100%;
-  margin: 0 auto;
-  padding-bottom: 80px;
-}
-
-.skin-card {
-  background: white;
-  border-radius: 12px;
-  padding: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  display: flex;
-  flex-direction: column;
-  border: 3px solid transparent;
-}
-
-.skin-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-}
-
-.skin-card.equipped {
-  border-color: #4caf50;
-  background: linear-gradient(145deg, #ffffff, #e8f5e9);
-}
-
-.skin-card.locked {
-  opacity: 0.7;
-}
-
-.skin-image-container {
-  position: relative;
-  width: 100%;
-  height: 150px;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  margin-bottom: 10px;
-}
-
-.skin-image {
-  max-width: 90%;
-  max-height: 140px;
-  object-fit: contain;
-  image-rendering: pixelated;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: crisp-edges;
-}
-
-.equipped-badge {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  background: #4caf50;
-  color: white;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 0.7rem;
-  font-weight: bold;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.locked-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 3rem;
-}
-
-.skin-info {
-  flex: 1;
-  text-align: center;
-  margin-bottom: 10px;
-}
-
-.skin-name {
-  font-size: 1rem;
-  color: #333;
-  margin: 0 0 5px 0;
-  font-weight: bold;
-}
-
-.skin-unlock {
-  font-size: 0.75rem;
-  color: #666;
-  margin: 0;
-  font-style: italic;
-}
-
-.skin-action {
-  width: 100%;
-}
-
-.btn-buy,
-.btn-equip,
-.btn-equipped {
-  width: 100%;
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-family: "Comic Sans MS", cursive, sans-serif;
-}
-
-.btn-buy {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  box-shadow: 0 3px 8px rgba(102, 126, 234, 0.3);
-}
-
-.btn-buy:hover {
-  transform: scale(1.05);
-  box-shadow: 0 5px 12px rgba(102, 126, 234, 0.5);
-}
-
-.btn-equip {
-  background: linear-gradient(135deg, #4caf50, #45a049);
-  color: white;
-  box-shadow: 0 3px 8px rgba(76, 175, 80, 0.3);
-}
-
-.btn-equip:hover {
-  transform: scale(1.05);
-  box-shadow: 0 5px 12px rgba(76, 175, 80, 0.5);
-}
-
-.btn-equipped {
-  background: #e0e0e0;
-  color: #999;
-  cursor: not-allowed;
-}
-
-/* Mensagem da loja */
-.shop-message {
-  position: fixed;
-  top: 80px;
-  left: 50%;
-  transform: translateX(-50%) translateY(-20px);
-  background: white;
-  color: #333;
-  padding: 15px 25px;
-  border-radius: 10px;
-  font-weight: bold;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.3s ease;
-  z-index: 1001;
-  max-width: 80%;
-  text-align: center;
-  border: 3px solid #333;
-}
-
-.shop-message.show {
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(-50%) translateY(0);
-}
-
-.shop-message.success {
-  background: #4caf50;
-  color: white;
-  border-color: #2e7d32;
-}
-
-.shop-message.error {
-  background: #f44336;
-  color: white;
-  border-color: #c62828;
-}
-
-/* Ajuste dos botões de navegação na loja */
-#shop-view .btn-back {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 998;
-}
-
-/* Mensagem de Skin Desbloqueada */
-.skin-unlocked-message {
+/* Adicionando estilos para o modal de confirmação de compra */
+.purchase-confirmation-modal {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.8);
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   z-index: 2000;
   opacity: 0;
   visibility: hidden;
   transition: all 0.3s ease;
 }
 
-.skin-unlocked-message.show {
+.purchase-confirmation-modal.show {
   opacity: 1;
   visibility: visible;
 }
 
-.skin-unlocked-content {
+.confirmation-modal-content {
   background: linear-gradient(145deg, #ffffff, #f8f9fa);
   border-radius: 20px;
   padding: 30px;
   text-align: center;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-  border: 4px solid #ffd700;
-  max-width: 400px;
-  animation: bounceIn 0.5s ease;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  border: 3px solid #667eea;
+  max-width: 350px;
+  width: 90%;
+  transform: scale(0.7);
+  transition: transform 0.3s ease;
 }
 
-@keyframes bounceIn {
-  0% {
-    transform: scale(0.3);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-  100% {
-    transform: scale(1);
-  }
+.purchase-confirmation-modal.show .confirmation-modal-content {
+  transform: scale(1);
 }
 
-.skin-unlocked-content h2 {
-  color: #ffd700;
+.confirmation-modal-content h2 {
+  color: #667eea;
   font-size: 1.8rem;
   margin-bottom: 20px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.unlocked-skin-image {
+.confirmation-skin-preview {
   width: 120px;
-  height: 160px;
+  height: 120px;
+  margin: 0 auto 15px;
+  background: linear-gradient(135deg, #fde68a 0%, #fbbf24 25%, #a78bfa 50%, #c084fc 75%, #818cf8 100%);
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.confirmation-skin-image {
+  max-width: 90%;
+  max-height: 100px;
   object-fit: contain;
   image-rendering: pixelated;
-  margin: 20px auto;
-  filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.25));
 }
 
-.skin-unlocked-content h3 {
-  color: #333;
+.confirmation-skin-name {
+  font-size: 1.3rem;
+  color: #1f2937;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.confirmation-price {
   font-size: 1.5rem;
-  margin: 15px 0;
+  color: #f59e0b;
+  font-weight: bold;
+  margin-bottom: 15px;
 }
 
-.skin-unlocked-content p {
-  color: #666;
-  font-size: 1rem;
-  margin-top: 10px;
+.confirmation-question {
+  font-size: 1.1rem;
+  color: #333;
+  margin-bottom: 20px;
+  font-weight: bold;
 }
 
-
-.btn-logout {
-    position: fixed;
-    top: 15px;
-    right: 15px;
-    background: #e74c3c;
-    color: white;
-    padding: 8px 15px;
-    border: none;
-    border-radius: 5px;
-    font-size: 14px;
-    cursor: pointer;
-    z-index: 1000; /* garante que fique acima de outros elementos */
+.confirmation-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
 }
 
-.btn-logout:hover {
-    background: #c0392b;
+.btn-confirm-yes,
+.btn-confirm-no {
+  padding: 12px 30px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.btn-creditos {
-    position: fixed;       
-    top: 15px;             
-    left: 15px;            
-    background: #9b59b6;   
-    color: white;
-    padding: 6px 12px;
-    border: none;
-    border-radius: 5px;
-    font-size: 14px;
-    text-decoration: none;
-    text-align: center;
-    cursor: pointer;
-    z-index: 1000;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+.btn-confirm-yes {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
 }
 
-.btn-creditos:hover {
-    background: #8e44ad;
+.btn-confirm-yes:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(16, 185, 129, 0.5);
+}
+
+.btn-confirm-no {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+}
+
+.btn-confirm-no:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(239, 68, 68, 0.5);
 }

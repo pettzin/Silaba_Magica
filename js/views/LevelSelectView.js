@@ -7,9 +7,8 @@ class LevelSelectView {
     this.backButton = document.getElementById("back-to-home-button")
   }
 
-  // Desenha os botões das fases na tela
   render(levels, unlockedLevel, handler) {
-    this.levelGrid.innerHTML = "" // Limpa a grade antes de desenhar
+    this.levelGrid.innerHTML = ""
     for (let i = 1; i <= 5; i++) {
       const button = document.createElement("button")
       button.textContent = i
@@ -17,9 +16,8 @@ class LevelSelectView {
 
       if (i <= unlockedLevel) {
         button.className = "level-button unlocked"
-        // Adiciona o evento de clique apenas para fases desbloqueadas
         button.addEventListener("click", () => {
-          handler(i) // Chama o handler do Controller passando o nº da fase
+          handler(i)
         })
       } else {
         button.className = "level-button locked"
@@ -53,3 +51,5 @@ class LevelSelectView {
     this.view.style.display = "none"
   }
 }
+
+window.LevelSelectView = LevelSelectView

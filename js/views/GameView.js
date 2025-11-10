@@ -5,6 +5,11 @@ class GameView {
     this.errorSound = new Audio("audios/erro.mp3")
     this.successSound.volume = 0.7
     this.errorSound.volume = 0.7
+    this.model = null
+  }
+
+  setModel(model) {
+    this.model = model
   }
 
   render(levelData, onComplete) {
@@ -45,6 +50,16 @@ class GameView {
           <div id="feedback" class="feedback"></div>
         </div>
         
+        <!-- Adicionando botões de controle de áudio -->
+        <div class="audio-controls">
+          <button id="music-toggle" class="audio-control-btn">
+            🎵
+          </button>
+          <button id="sound-toggle" class="audio-control-btn">
+            ${this.model?.state.soundEffectsEnabled ? "🔊" : "🔇"} 
+          </button>
+        </div>
+        
         <div id="completion-modal" class="completion-modal">
           <div class="modal-content">
             <div class="modal-header">
@@ -69,19 +84,29 @@ class GameView {
               </div>
             </div>
             
-            <button id="continue-button" class="btn-continue">Continuar</button>
+            <!-- Adicionado botão de reiniciar fase -->
+            <div class="modal-actions">
+              <button id="restart-level-button" class="btn-restart" title="Reiniciar Fase">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
+                </svg>
+              </button>
+              <button id="continue-button" class="btn-continue">Continuar</button>
+            </div>
           </div>
         </div>
       </div>`
 
     this.startSyllableHunt(levelData.syllables, () => this.showCompletionModal(levelData, onComplete))
     this.bindHintButton(levelData.syllables)
+    this.bindAudioControls()
   }
 
   showCompletionModal(levelData, onComplete) {
     const modal = document.getElementById("completion-modal")
     const creditsAmount = document.getElementById("credits-earned-amount")
     const continueButton = document.getElementById("continue-button")
+    const restartButton = document.getElementById("restart-level-button")
     const stars = document.querySelectorAll(".star")
 
     creditsAmount.textContent = `${levelData.reward} créditos`
@@ -101,6 +126,14 @@ class GameView {
     const starsContainer = document.querySelector(".stars-container")
     starsContainer.addEventListener("mouseleave", () => {
       this.updateStarDisplay(stars, selectedRating)
+    })
+
+    restartButton.addEventListener("click", () => {
+      modal.classList.remove("show")
+      setTimeout(() => {
+        // Recarrega a mesma fase
+        this.render(levelData, onComplete)
+      }, 300)
     })
 
     continueButton.addEventListener("click", () => {
@@ -137,135 +170,137 @@ class GameView {
     }
   }
 
- startSyllableHunt(syllablesToFind, onComplete) {
-  const grid = document.getElementById("game-grid")
-  const feedback = document.getElementById("feedback")
-  const size = 8
+  startSyllableHunt(syllablesToFind, onComplete) {
+    const grid = document.getElementById("game-grid")
+    const feedback = document.getElementById("feedback")
+    const size = 8
 
-  let selectedCells = []
-  const foundSyllables = []
-  this.foundSyllables = foundSyllables
+    let selectedCells = []
+    const foundSyllables = []
+    this.foundSyllables = foundSyllables
 
-  // Função para criar a matriz inicial
-  const matrix = Array.from({ length: size }, () =>
-    Array.from({ length: size }, () => null)
-  )
+    // Função para criar a matriz inicial
+    const matrix = Array.from({ length: size }, () => Array.from({ length: size }, () => null))
 
-  // Insere sílaba obrigatória de forma segura
-  const insertSyllable = (syllable) => {
-    let placed = false
-    let attempts = 0
+    // Insere sílaba obrigatória de forma segura
+    const insertSyllable = (syllable) => {
+      let placed = false
+      let attempts = 0
 
-    while (!placed && attempts < 100) {
-      const isHorizontal = Math.random() > 0.5
-      const row = Math.floor(Math.random() * (isHorizontal ? size : size - syllable.length))
-      const col = Math.floor(Math.random() * (isHorizontal ? size - syllable.length : size))
+      while (!placed && attempts < 100) {
+        const isHorizontal = Math.random() > 0.5
+        const row = Math.floor(Math.random() * (isHorizontal ? size : size - syllable.length))
+        const col = Math.floor(Math.random() * (isHorizontal ? size - syllable.length : size))
 
-      let canPlace = true
-      for (let i = 0; i < syllable.length; i++) {
-        const r = isHorizontal ? row : row + i
-        const c = isHorizontal ? col + i : col
-        if (matrix[r][c] !== null) {
-          canPlace = false
-          break
-        }
-      }
-
-      if (canPlace) {
+        let canPlace = true
         for (let i = 0; i < syllable.length; i++) {
           const r = isHorizontal ? row : row + i
           const c = isHorizontal ? col + i : col
-          matrix[r][c] = syllable[i]
+          if (matrix[r][c] !== null) {
+            canPlace = false
+            break
+          }
         }
-        placed = true
+
+        if (canPlace) {
+          for (let i = 0; i < syllable.length; i++) {
+            const r = isHorizontal ? row : row + i
+            const c = isHorizontal ? col + i : col
+            matrix[r][c] = syllable[i]
+          }
+          placed = true
+        }
+
+        attempts++
       }
 
-      attempts++
+      if (!placed) console.warn(`Não foi possível posicionar a sílaba: ${syllable}`)
     }
 
-    if (!placed) console.warn(`Não foi possível posicionar a sílaba: ${syllable}`)
-  }
+    // Inserir todas as sílabas obrigatórias
+    syllablesToFind.forEach(insertSyllable)
 
-  // Inserir todas as sílabas obrigatórias
-  syllablesToFind.forEach(insertSyllable)
-
-  // Preencher espaços vazios com letras aleatórias
-  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-  for (let r = 0; r < size; r++) {
-    for (let c = 0; c < size; c++) {
-      if (!matrix[r][c]) matrix[r][c] = letters[Math.floor(Math.random() * letters.length)]
+    // Preencher espaços vazios com letras aleatórias
+    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    for (let r = 0; r < size; r++) {
+      for (let c = 0; c < size; c++) {
+        if (!matrix[r][c]) matrix[r][c] = letters[Math.floor(Math.random() * letters.length)]
+      }
     }
-  }
 
-  // Renderiza grid
-  grid.innerHTML = ""
-  matrix.forEach((row) => {
-    row.forEach((letter) => {
-      const cell = document.createElement("div")
-      cell.classList.add("cell")
-      cell.textContent = letter
-      grid.appendChild(cell)
+    // Renderiza grid
+    grid.innerHTML = ""
+    matrix.forEach((row) => {
+      row.forEach((letter) => {
+        const cell = document.createElement("div")
+        cell.classList.add("cell")
+        cell.textContent = letter
+        grid.appendChild(cell)
+      })
     })
-  })
 
-  // Função para lidar com seleção de sílabas
-  const handleSelectionEnd = () => {
-    if (selectedCells.length === 0) return
+    // Função para lidar com seleção de sílabas
+    const handleSelectionEnd = () => {
+      if (selectedCells.length === 0) return
 
-    const word = selectedCells.map((c) => c.textContent).join("")
-    if (syllablesToFind.includes(word) && !foundSyllables.includes(word)) {
-      // Acerto
-      this.successSound.currentTime = 0
-      this.successSound.play().catch(() => {})
+      const word = selectedCells.map((c) => c.textContent).join("")
+      if (syllablesToFind.includes(word) && !foundSyllables.includes(word)) {
+        // Acerto
+        if (this.model?.state.soundEffectsEnabled) {
+          this.successSound.currentTime = 0
+          this.successSound.play().catch(() => {})
+        }
 
-      feedback.textContent = `Você encontrou: ${word}!`
-      feedback.className = "feedback sucesso"
-      foundSyllables.push(word)
-      selectedCells.forEach((c) => c.classList.add("correta"))
+        feedback.textContent = `Você encontrou: ${word}!`
+        feedback.className = "feedback sucesso"
+        foundSyllables.push(word)
+        selectedCells.forEach((c) => c.classList.add("correta"))
 
-      if (foundSyllables.length === syllablesToFind.length) {
-        feedback.textContent = "Parabéns! Fase completa!"
-        feedback.className = "feedback vitoria"
-        setTimeout(onComplete, 1500)
+        if (foundSyllables.length === syllablesToFind.length) {
+          feedback.textContent = "Parabéns! Fase completa!"
+          feedback.className = "feedback vitoria"
+          setTimeout(onComplete, 1500)
+        }
+      } else {
+        // Erro
+        if (this.model?.state.soundEffectsEnabled) {
+          this.errorSound.currentTime = 0
+          this.errorSound.play().catch(() => {})
+        }
+
+        feedback.textContent = "Tente novamente!"
+        feedback.className = "feedback erro"
+        selectedCells.forEach((c) => c.classList.remove("selecionada"))
       }
-    } else {
-      // Erro
-      this.errorSound.currentTime = 0
-      this.errorSound.play().catch(() => {})
 
-      feedback.textContent = "Tente novamente!"
-      feedback.className = "feedback erro"
-      selectedCells.forEach((c) => c.classList.remove("selecionada"))
+      selectedCells = []
     }
 
-    selectedCells = []
+    // Eventos de seleção
+    let isSelecting = false
+    grid.addEventListener("mousedown", (e) => {
+      if (e.target.classList.contains("cell")) {
+        isSelecting = true
+        selectedCells.forEach((c) => c.classList.remove("selecionada"))
+        selectedCells = [e.target]
+        e.target.classList.add("selecionada")
+      }
+    })
+
+    grid.addEventListener("mouseover", (e) => {
+      if (isSelecting && e.target.classList.contains("cell") && !selectedCells.includes(e.target)) {
+        selectedCells.push(e.target)
+        e.target.classList.add("selecionada")
+      }
+    })
+
+    document.addEventListener("mouseup", () => {
+      if (isSelecting) {
+        handleSelectionEnd()
+        isSelecting = false
+      }
+    })
   }
-
-  // Eventos de seleção
-  let isSelecting = false
-  grid.addEventListener("mousedown", (e) => {
-    if (e.target.classList.contains("cell")) {
-      isSelecting = true
-      selectedCells.forEach((c) => c.classList.remove("selecionada"))
-      selectedCells = [e.target]
-      e.target.classList.add("selecionada")
-    }
-  })
-
-  grid.addEventListener("mouseover", (e) => {
-    if (isSelecting && e.target.classList.contains("cell") && !selectedCells.includes(e.target)) {
-      selectedCells.push(e.target)
-      e.target.classList.add("selecionada")
-    }
-  })
-
-  document.addEventListener("mouseup", () => {
-    if (isSelecting) {
-      handleSelectionEnd()
-      isSelecting = false
-    }
-  })
-}
 
   show() {
     this.view.style.display = "block"
@@ -273,4 +308,25 @@ class GameView {
   hide() {
     this.view.style.display = "none"
   }
+
+  bindAudioControls() {
+    const musicToggle = document.getElementById("music-toggle")
+    const soundToggle = document.getElementById("sound-toggle")
+
+    if (musicToggle) {
+      musicToggle.addEventListener("click", () => {
+        const enabled = this.model.toggleMusic()
+        musicToggle.textContent = `${enabled ? "🎵 " : "🔇"}`
+      })
+    }
+
+    if (soundToggle) {
+      soundToggle.addEventListener("click", () => {
+        const enabled = this.model.toggleSoundEffects()
+        soundToggle.textContent = `${enabled ? "🔊" : "🔇"}`
+      })
+    }
+  }
 }
+
+window.GameView = GameView
