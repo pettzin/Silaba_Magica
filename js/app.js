@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Botão de logout
     const logoutBtn = document.createElement("button")
-    logoutBtn.textContent = "Logout"
+    logoutBtn.textContent = "Sair"
     logoutBtn.classList.add("btn-logout")
     logoutBtn.addEventListener("click", () => {
       localStorage.removeItem("currentUser")
