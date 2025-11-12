@@ -205,6 +205,23 @@ class GameModel {
         reward: 500,
         rewardSkin: "avatar_fada_celestial",
       },
+      {
+        id: 6,
+        title: "🏴‍☠️ Tesouro Escondido (FASE SECRETA) 🏴‍☠️",
+        image: "images/imagens/tesouro.jpg",
+        story: `Um pi<span class="lacuna" data-silaba="RA">__</span>ta famoso navegava os mares em busca do grande tesouro.<br>
+                        Ele recebeu um <span class="lacuna" data-silaba="MA">__</span>pa antigo em uma garrafa flutuante.<br>
+                        "X marca o local!", disse o pi<span class="lacuna" data-silaba="RA">__</span>ta com entusiasmo.<br>
+                        Cavou na areia e encontrou um bau<span class="lacuna" data-silaba="LHE">___</span> cheio de ouro.<br>
+                        "Eureca! Encontrei o tesouro mágico!" comemo<span class="lacuna" data-silaba="ROU">___</span> com alegria.`,
+        objective:
+          "Encontre as sílabas <strong>RA</strong>, <strong>MA</strong>, <strong>LHE</strong> e <strong>ROU</strong> para desvendar o tesouro secreto!",
+        syllables: ["RA", "MA", "LHE", "ROU"],
+        reward: 750,
+        rewardSkin: "avatar_guerreiro_elemental",
+        isSecret: true,
+        unlockedBySkin: "avatar_pirata",
+      },
     ]
 
     this.backgroundMusic = new Audio("audios/musica/musicaFundo.mp3")
@@ -228,6 +245,27 @@ class GameModel {
       }
     }
     return this.defaultState
+  }
+
+  // Verifica fases secretas desbloqueadas pelas skins
+  checkSecretLevels() {
+    const secretLevels = this.levels.filter((l) => l.isSecret)
+    secretLevels.forEach((secret) => {
+      if (secret.unlockedBySkin && this.hasSkin(secret.unlockedBySkin)) {
+        // Marca a fase secreta como desbloqueada
+        localStorage.setItem(`secret_level_${secret.id}_unlocked`, 'true')
+      } else {
+        // Remove a marcação se o usuário não tiver a skin necessária
+        localStorage.removeItem(`secret_level_${secret.id}_unlocked`)
+      }
+    })
+  }
+
+  // Verifica se uma fase secreta está desbloqueada
+  isSecretLevelUnlocked(levelId) {
+    const level = this.levels.find((l) => l.id === levelId)
+    if (!level || !level.isSecret) return false
+    return localStorage.getItem(`secret_level_${levelId}_unlocked`) === 'true'
   }
 
   // Salva o progresso
@@ -332,7 +370,14 @@ class GameModel {
     this.state.ownedSkins.push(skinId)
     this.saveState()
 
-    return { success: true, message: "Skin comprada com sucesso!" }
+    // Verifica se é a skin do pirata — desbloqueia a fase secreta
+    const secretLevel = this.levels.find((l) => l.isSecret && l.unlockedBySkin === skinId)
+    const result = { success: true, message: "Skin comprada com sucesso!" }
+    if (secretLevel) {
+      result.unlockedSecret = secretLevel
+    }
+
+    return result
   }
 
   // Equipa uma skin

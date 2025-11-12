@@ -43,6 +43,7 @@ class GameController {
       "game-background-3",
       "game-background-4",
       "game-background-5",
+      "game-background-6",
     )
 
     if (levelId === 1) {
@@ -60,6 +61,9 @@ class GameController {
     } else if (levelId === 5) {
       // Fase 5: usa a imagem blur da nova skin
       body.classList.add("game-background-5")
+    } else if (levelId === 6) {
+      // Fase 6 (secreta): usa background especial tesouro
+      body.classList.add("game-background-6")
     } else {
       // Todas as outras telas: background padrão #333
       body.classList.add("default-background")
@@ -103,8 +107,11 @@ class GameController {
     this._setBodyBackground()
     this.model.stopBackgroundMusic()
 
+    // Verifica fases secretas desbloqueadas
+    this.model.checkSecretLevels()
+
     // Renderiza a grade de fases com os dados mais recentes do modelo
-    this.views.levelSelect.render(this.model.levels, this.model.state.unlockedLevel, this.showGame)
+    this.views.levelSelect.render(this.model.levels, this.model.state.unlockedLevel, this.showGame, (levelId) => this.model.isSecretLevelUnlocked(levelId))
 
     this.views.levelSelect.show()
 
@@ -179,18 +186,83 @@ class GameController {
       this.views.shop.showMessage(result.message, "success")
       this._updateAllCredits()
 
-      // Re-renderiza a loja
-      setTimeout(() => {
-        this.showShop()
-      }, 1000)
-
       // Celebra com o avatar
       if (this.avatar) {
         this.avatar.celebrate()
       }
+
+      // Se desbloqueou uma fase secreta, mostra popup e marca como desbloqueada
+      if (result.unlockedSecret) {
+        this.model.checkSecretLevels()
+        this._showSecretLevelPopup(result.unlockedSecret)
+      }
+
+      // Re-renderiza a loja
+      setTimeout(() => {
+        this.showShop()
+      }, 1000)
     } else {
       this.views.shop.showMessage(result.message, "error")
     }
+  }
+
+  _showSecretLevelPopup(secretLevel) {
+    const popup = document.createElement('div')
+    popup.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 99999;
+      animation: fadeIn 0.3s ease-in;
+    `
+    popup.innerHTML = `
+      <div style="
+        background: linear-gradient(135deg,#6c63ff,#00c6ff);
+        padding: 40px;
+        border-radius: 20px;
+        max-width: 500px;
+        text-align: center;
+        color: white;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        animation: slideUp 0.5s ease-out;
+      ">
+        <div style="font-size: 60px; margin-bottom: 20px;">🏴‍☠️ 🗺️ 💎</div>
+        <h2 style="font-size: 28px; margin: 20px 0; font-weight: bold;">FASE SECRETA DESBLOQUEADA!</h2>
+        <p style="font-size: 18px; margin: 15px 0; line-height: 1.5;">
+          Parabéns! Você desbloqueou a <strong>Fase ${secretLevel.id}: ${secretLevel.title}</strong>!
+        </p>
+        <p style="font-size: 14px; margin: 15px 0; opacity: 0.9;">
+          Uma aventura mágica te espera. Procure por ela na seleção de fases.
+        </p>
+        <div style="font-size: 16px; margin: 20px 0; background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px;">
+          Recompensa: <strong>${secretLevel.reward} créditos extras!</strong>
+        </div>
+        <button style="
+          background: white;
+          color: #6c63ff;
+          border: none;
+          padding: 12px 30px;
+          border-radius: 8px;
+          font-size: 16px;
+          font-weight: bold;
+          cursor: pointer;
+          margin-top: 20px;
+        " onclick="this.parentElement.parentElement.remove()">
+          🎉 Legal! Vou jogar!
+        </button>
+      </div>
+      <style>
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+      </style>
+    `
+    document.body.appendChild(popup)
   }
 
   handleEquipSkin(skinId) {

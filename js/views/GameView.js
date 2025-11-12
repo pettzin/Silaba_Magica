@@ -6,10 +6,54 @@ class GameView {
     this.successSound.volume = 0.7
     this.errorSound.volume = 0.7
     this.model = null
+    this.isReading = false
   }
 
   setModel(model) {
     this.model = model
+  }
+
+  _readStory(storyHtml, buttonElement) {
+    if (!('speechSynthesis' in window)) {
+      alert('Seu navegador não suporta leitura de voz.')
+      return
+    }
+    
+    // Extrai texto limpo (sem tags HTML)
+    const tempDiv = document.createElement('div')
+    tempDiv.innerHTML = storyHtml
+    const cleanText = tempDiv.textContent || tempDiv.innerText
+    
+    if (this.isReading) {
+      window.speechSynthesis.cancel()
+      this.isReading = false
+      buttonElement.textContent = '🔊 Ler história'
+      buttonElement.style.background = ''
+      return
+    }
+    
+    try {
+      this.isReading = true
+      buttonElement.textContent = '⏹️ Parar leitura'
+      buttonElement.style.background = 'rgba(255,0,0,0.2)'
+      
+      const u = new SpeechSynthesisUtterance(cleanText)
+      u.lang = 'pt-BR'
+      u.rate = 0.9
+      u.pitch = 1.0
+      
+      u.onend = () => {
+        this.isReading = false
+        buttonElement.textContent = '🔊 Ler história'
+        buttonElement.style.background = ''
+      }
+      
+      window.speechSynthesis.speak(u)
+    } catch (e) {
+      console.error('Erro ao ler história:', e)
+      this.isReading = false
+      buttonElement.textContent = '🔊 Ler história'
+    }
   }
 
   render(levelData, onComplete) {
@@ -27,8 +71,9 @@ class GameView {
           
           <div class="story-section">
             <div class="story-text">
-              <p>${levelData.story}</p>
+              <p id="story-content">${levelData.story}</p>
             </div>
+            <button id="read-story-btn" class="read-story-btn">🔊 Ler história</button>
           </div>
           
           <div class="objective-banner">
@@ -100,6 +145,15 @@ class GameView {
     this.startSyllableHunt(levelData.syllables, () => this.showCompletionModal(levelData, onComplete))
     this.bindHintButton(levelData.syllables)
     this.bindAudioControls()
+
+    // Bind read story button
+    const readBtn = document.getElementById('read-story-btn')
+    const storyContent = document.getElementById('story-content')
+    if (readBtn && storyContent) {
+      readBtn.addEventListener('click', () => {
+        this._readStory(storyContent.innerHTML, readBtn)
+      })
+    }
   }
 
   showCompletionModal(levelData, onComplete) {

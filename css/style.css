@@ -72,6 +72,24 @@ body.game-background-5 {
   background-attachment: fixed;
 }
 
+/* Background para Fase 6 (Secreta) - Tesouro Escondido */
+body.game-background-6 {
+  background: linear-gradient(135deg, #1a0e2e 0%, #6c3d3d 50%, #4a3728 100%);
+  background-attachment: fixed;
+}
+
+body.game-background-6::before {
+  content: "🏴‍☠️ 💎 🗺️";
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 120px;
+  opacity: 0.1;
+  z-index: 1;
+  pointer-events: none;
+}
+
 body.game-background-4::before,
 body.game-background-5::before {
   content: "";
@@ -313,6 +331,22 @@ body.game-background-3::before {
   cursor: not-allowed;
 }
 
+.level-button.secret-level {
+  background: linear-gradient(135deg, #ff6b00, #ffaa00);
+  font-size: 24px;
+  font-weight: bold;
+  animation: pulse-secret 2s infinite;
+}
+
+.level-button.secret-level:hover {
+  box-shadow: 0 0 25px rgba(255, 170, 0, 0.8);
+}
+
+@keyframes pulse-secret {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
 /* --- TELA DE JOGO --- */
 #game-view {
   padding: 10px;
@@ -442,6 +476,30 @@ body.game-background-3::before {
 .hint-button:hover {
   transform: scale(1.1);
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+}
+
+.read-story-btn {
+  display: block;
+  margin-top: 10px;
+  padding: 10px 18px;
+  background: linear-gradient(135deg, #6c63ff, #00c6ff);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.read-story-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.read-story-btn:active {
+  transform: scale(0.95);
 }
 
 .hunt-section {

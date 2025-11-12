@@ -7,8 +7,10 @@ class LevelSelectView {
     this.backButton = document.getElementById("back-to-home-button")
   }
 
-  render(levels, unlockedLevel, handler) {
+  render(levels, unlockedLevel, handler, isSecretUnlocked) {
     this.levelGrid.innerHTML = ""
+    
+    // Renderiza fases normais (1-5)
     for (let i = 1; i <= 5; i++) {
       const button = document.createElement("button")
       button.textContent = i
@@ -24,6 +26,19 @@ class LevelSelectView {
         button.textContent = "🔒"
       }
       this.levelGrid.appendChild(button)
+    }
+
+    // Renderiza fase 6 secreta se desbloqueada
+    if (isSecretUnlocked && isSecretUnlocked(6)) {
+      const secretButton = document.createElement("button")
+      secretButton.textContent = "🏴‍☠️"
+      secretButton.dataset.levelId = 6
+      secretButton.className = "level-button unlocked secret-level"
+      secretButton.title = "Tesouro Escondido (FASE SECRETA)"
+      secretButton.addEventListener("click", () => {
+        handler(6)
+      })
+      this.levelGrid.appendChild(secretButton)
     }
   }
 

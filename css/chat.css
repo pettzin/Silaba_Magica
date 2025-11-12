@@ -1,0 +1,78 @@
+/* Chat UI styles */
+.sm-chat-btn {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg,#6c63ff,#00c6ff);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+  z-index: 9999;
+}
+
+.sm-chat-modal {
+  position: fixed;
+  right: 24px;
+  bottom: 92px;
+  width: 360px;
+  max-height: 70vh;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 10000;
+  font-family: sans-serif;
+}
+
+.sm-chat-header {
+  background: linear-gradient(90deg,#6c63ff,#00c6ff);
+  color: #fff;
+  padding: 10px 12px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.sm-chat-header .title { font-weight:700 }
+.sm-chat-body {
+  padding: 12px;
+  background: #f7f7fb;
+  overflow-y: auto;
+  flex:1 1 auto;
+}
+.sm-chat-footer {
+  padding: 8px;
+  display:flex;
+  gap:8px;
+  align-items:center;
+  border-top:1px solid #eee;
+}
+.sm-chat-input { flex:1 }
+.sm-chat-input input {
+  width:100%;
+  padding:8px 10px;
+  border-radius:8px;
+  border:1px solid #ddd;
+}
+.sm-msg { margin-bottom:10px; display:flex }
+.sm-msg.user { justify-content:flex-end }
+.sm-msg .bubble { max-width:75%; padding:10px 12px; border-radius:12px; }
+.sm-msg.user .bubble { background:#6c63ff; color:#fff; border-bottom-right-radius:4px }
+.sm-msg.bot .bubble { background:#fff; border:1px solid #e6e6f0; color:#222 }
+.sm-typing { font-size:12px; color:#666; }
+.sm-controls { display:flex; gap:8px }
+.sm-controls button { padding:6px 8px; border-radius:6px; border:1px solid #ddd; background:#fff; cursor:pointer }
+.sm-chat-empty { color:#666; font-size:13px; text-align:center; padding:20px }
+
+/* Voice button styles */
+.sm-voice-btn { padding:6px 8px; border-radius:6px; border:1px solid #ddd; background:#fff; cursor:pointer; font-size:14px }
+.sm-voice-btn.active { background: linear-gradient(90deg,#6c63ff,#00c6ff); color:#fff; border-color:transparent }
+
