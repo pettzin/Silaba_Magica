@@ -52,7 +52,7 @@ A fase 6 secreta foi implementada com desbloqueio automático ao comprar a skin 
 4. Clique nele para jogar a fase secreta
 
 ### Passo 4: Jogar a Fase Secreta
-- **Título:** 🏴‍☠️ Tesouro Escondido (FASE SECRETA) 🏴‍☠️
+- **Título:** 🏴‍☠️ Tesouro Escondido 🏴‍☠️
 - **Sílabas:** RA, MA, LHE, ROU
 - **Recompensa:** 750 créditos
 - **Background:** Gradiente marrom especial com emoji de tesouro/pirata/mapa

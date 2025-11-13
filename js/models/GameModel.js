@@ -207,17 +207,17 @@ class GameModel {
       },
       {
         id: 6,
-        title: "🏴‍☠️ Tesouro Escondido (FASE SECRETA) 🏴‍☠️",
-        image: "images/imagens/tesouro.jpg",
-        story: `Um pi<span class="lacuna" data-silaba="RA">__</span>ta famoso navegava os mares em busca do grande tesouro.<br>
+        title: "🏴‍☠️ Tesouro Escondido 🏴‍☠️",
+        image: "images/imagens/tesouro.png",
+        story: `Um pi<span class="lacuna" data-silaba="RA">__</span>ta famoso navegava os ma<span class="lacuna" data-silaba="RES">__</span> em busca do grande tesouro.<br>
                         Ele recebeu um <span class="lacuna" data-silaba="MA">__</span>pa antigo em uma garrafa flutuante.<br>
-                        "X marca o local!", disse o pi<span class="lacuna" data-silaba="RA">__</span>ta com entusiasmo.<br>
-                        Cavou na areia e encontrou um bau<span class="lacuna" data-silaba="LHE">___</span> cheio de ouro.<br>
-                        "Eureca! Encontrei o tesouro mágico!" comemo<span class="lacuna" data-silaba="ROU">___</span> com alegria.`,
+                        "X marca o local!", disse o pirata com entusiasmo.<br>
+                        Cavou na areia e en<span class="lacuna" data-silaba="CON">__</span>trou um baú cheio de ouro.<br>
+                        "Eureca! Encon<span class="lacuna" data-silaba="TREI">__</span> o tesouro mágico!" comemo<span class="lacuna" data-silaba="ROU">___</span> com alegria.`,
         objective:
-          "Encontre as sílabas <strong>RA</strong>, <strong>MA</strong>, <strong>LHE</strong> e <strong>ROU</strong> para desvendar o tesouro secreto!",
-        syllables: ["RA", "MA", "LHE", "ROU"],
-        reward: 750,
+          "Encontre as sílabas <strong>RA</strong>, <strong>RES</strong>, <strong>MA</strong>, <strong>CON</strong>, <strong>TREI</strong> e <strong>ROU</strong> para desvendar o tesouro secreto!",
+        syllables: ["RA", "RES", "MA", "CON", "TREI", "ROU"],
+        reward: 1000,
         rewardSkin: "avatar_guerreiro_elemental",
         isSecret: true,
         unlockedBySkin: "avatar_pirata",
