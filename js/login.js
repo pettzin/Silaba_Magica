@@ -112,7 +112,7 @@ btnLogin.addEventListener('click', () => {
       localStorage.setItem('silabasMagicasState', JSON.stringify(usuario.gameState))
 
       setTimeout(() => {
-        window.location.href = 'index.html'
+        window.location.href = '/html/index.html'
       }, 800)
     }
   } catch (error) {
@@ -159,7 +159,7 @@ btnCadastro.addEventListener('click', () => {
       localStorage.setItem('silabasMagicasState', JSON.stringify(novo.gameState))
 
       setTimeout(() => {
-        window.location.href = 'index.html'
+        window.location.href = '/html/index.html'
       }, 800)
     }
   } catch (error) {

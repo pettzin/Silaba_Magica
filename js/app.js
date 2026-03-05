@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!currentUser) {
     // Se não estiver logado, redireciona para a tela de login
-    window.location.href = "login.html"
+    window.location.href = "/html/login.html"
     return
   }
 
@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
     logoutBtn.addEventListener("click", () => {
       localStorage.removeItem("currentUser")
       localStorage.removeItem("silabasMagicasState")
-      window.location.href = "login.html"
+      window.location.href = "/html/login.html"
     })
     homeContent.appendChild(logoutBtn)
   }
@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
     creditBtn.classList.add("btn-creditos")
     creditBtn.addEventListener("click", () => {
       // Abre a página de créditos
-      window.location.href = "creditos.html"
+      window.location.href = "/html/credits.html"
     })
     document.body.appendChild(creditBtn)
   }
